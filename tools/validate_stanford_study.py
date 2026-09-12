@@ -69,6 +69,21 @@ def scan_public_content() -> None:
             assert not pattern.search(text), f"{path}: suspicious internal identifier pattern"
 
 
+def validate_course_currency() -> None:
+    index = (PUBLIC / "index.html").read_text(encoding="utf-8")
+    for marker in (
+        "CS329A · Spring 2027",
+        "확장 수업 · 최신 확인 학기",
+        "CS146S · Fall 2026",
+        "CS229 · Summer 2026",
+        "CS234 · Winter 2026",
+        "CS231N · Spring 2026",
+        "CS25 · Spring 2026",
+        "CS230 · 공개 사이트 2025 · 영상 Fall 2018",
+    ):
+        assert marker in index, f"missing course currency marker: {marker}"
+
+
 def main() -> None:
     keys: list[str] = []
     total_modules = 0
@@ -80,6 +95,7 @@ def main() -> None:
     assert len(keys) == len(set(keys)), "duplicate progress keys"
     assert (DAYS / "study_engine.css").exists()
     assert (DAYS / "study_engine.js").exists()
+    validate_course_currency()
     scan_public_content()
     print(
         f"Stanford study validation passed: {len(TARGET_DAYS)} converted days, "
