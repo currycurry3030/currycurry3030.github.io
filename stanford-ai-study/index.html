@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Stanford AI 30-Day Study</title>
+  <title>Stanford AI 30-Day + Extension Study</title>
   <style>
     *{box-sizing:border-box}
     body{margin:0;background:#f5f7fb;color:#172033;font-family:Inter,"Noto Sans KR",system-ui,sans-serif;line-height:1.55}
@@ -29,16 +29,13 @@
     .links a{background:#101828;color:white;text-decoration:none;padding:8px 10px;border-radius:9px;font-size:13px}
     .course-status{background:#eef7ff;border:1px solid #bfdbfe;border-radius:14px;padding:15px;margin:16px 0;color:#19335a}
     .course-status p{margin:6px 0 0}
-    .extensions{margin:30px 0 8px}
-    .extension-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .extension{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:15px}
-    .extension h3{margin:7px 0;font-size:17px}
-    .extension .term{color:#0b6b78;font-size:12px;font-weight:800}
-    .extension p{color:#475467;font-size:13px;margin:7px 0 12px}
-    .extension a{color:#1d4ed8;font-size:13px;font-weight:700}
+    .extensions{margin:32px 0 8px;padding-top:8px;border-top:1px solid #dfe4ea}
+    .extension-note{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:14px;padding:15px;margin:12px 0;color:#4c1d95}
+    .extension-progress{background:#e9e5ff;margin:10px 0 18px}
+    .extension-progress div{background:#7c3aed}
     label{white-space:nowrap;font-size:14px}
     @media(max-width:760px){
-      .wrap{padding:0}.hero{border-radius:0}.content{padding:12px}.arch,.extension-grid{grid-template-columns:1fr}.day{grid-template-columns:1fr}.links a{flex:1;text-align:center}
+      .wrap{padding:0}.hero{border-radius:0}.content{padding:12px}.arch{grid-template-columns:1fr}.day{grid-template-columns:1fr}.links a{flex:1;text-align:center}
     }
   </style>
 </head>
@@ -47,8 +44,8 @@
   <section class="hero">
     <div class="hero-top">
       <div>
-        <h1>Stanford AI · 30일 학습계획</h1>
-        <p>CS224N → CS336 → CS329Z → CS329A · 평일 30일 × 1시간</p>
+        <h1>Stanford AI · 30일 + 확장 학습계획</h1>
+        <p>CS224N → CS336 → CS329Z → CS329A · 평일 30일 × 1시간 + 선택형 확장 6일</p>
       </div>
       <div class="focus" id="focusText">학습 일정 확인 중…</div>
     </div>
@@ -65,17 +62,6 @@
     <section class="course-status" aria-label="수업 최신성">
       <b>CS329A · Spring 2027</b>
       <p>30일 학습 노트의 CS329A 주제는 2027년 봄 공식 개설 기준으로 표시합니다. 날짜별 학습 노트는 self-improving agent의 공개 주제를 따라 구성한 학습 순서입니다.</p>
-    </section>
-    <section class="extensions" aria-labelledby="extension-heading">
-      <h2 id="extension-heading">확장 수업 · 최신 확인 학기</h2>
-      <div class="extension-grid">
-        <article class="extension"><span class="term">CS146S · Fall 2026</span><h3>The Modern Software Developer</h3><p>MCP, agent skill, spec-driven development, software factory를 실습 중심으로 확장합니다.</p><a href="https://themodernsoftware.dev/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-        <article class="extension"><span class="term">CS229 · Summer 2026</span><h3>Machine Learning</h3><p>지도·비지도 학습과 확률적 모델링으로 ML 기반을 다시 다집니다.</p><a href="https://cs229.stanford.edu/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-        <article class="extension"><span class="term">CS234 · Winter 2026</span><h3>Reinforcement Learning</h3><p>MDP, value function, policy optimization으로 agent 의사결정 기초를 만듭니다.</p><a href="https://web.stanford.edu/class/cs234/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-        <article class="extension"><span class="term">CS231N · Spring 2026</span><h3>Deep Learning for Computer Vision</h3><p>시각 인식 모델과 deep learning 구현 감각을 프로젝트로 보완합니다.</p><a href="https://cs231n.stanford.edu/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-        <article class="extension"><span class="term">CS25 · Spring 2026</span><h3>Transformers United</h3><p>Transformer 연구와 실제 시스템을 업계·학계 연사 세션으로 넓혀 봅니다.</p><a href="https://web.stanford.edu/class/cs25/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-        <article class="extension"><span class="term">CS230 · 공개 사이트 2025 · 영상 Fall 2018</span><h3>Deep Learning</h3><p>공개 최신 정규 학기는 확인되지 않아, 현재 공개 사이트와 기존 강의 영상을 보조 자료로 둡니다.</p><a href="https://cs230.stanford.edu/" target="_blank" rel="noopener noreferrer">공식 수업 페이지 ↗</a></article>
-      </div>
     </section>
     <section>
       <h2>30일 일정</h2>
@@ -110,10 +96,28 @@
       <article class="day" data-date="2026-10-22"><div><b>Day 29</b><span>2026-10-22 · CS329A · Spring 2027</span><h3>Long-horizon Evaluation</h3></div><div class="links"><a href="days/day29_2026-10-22_pc.html">💻 PC 학습</a><a href="days/day29_2026-10-22_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="29"> 완료</label></article>
       <article class="day" data-date="2026-10-23"><div><b>Day 30</b><span>2026-10-23 · CS329A · Spring 2027</span><h3>3-Loop Recipe Advisor Integration</h3></div><div class="links"><a href="days/day30_2026-10-23_pc.html">💻 PC 학습</a><a href="days/day30_2026-10-23_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="30"> 완료</label></article>
     </section>
+
+    <section class="extensions" aria-labelledby="extension-heading">
+      <h2 id="extension-heading">확장 수업 · 선택형 6일 · 최신 확인 학기</h2>
+      <div class="extension-note">
+        <b>기존 30일과 같은 학습 규격</b>
+        <p>각 확장 수업도 1일 1시간 핵심 코스 + Deep Dive, PC/모바일 페이지, 모듈별 핵심 → 쉬운 한국어 설명 → 교수 설명 복원 → AI/Agent 실무 연결 → 핵심용어 → Quiz 순서를 그대로 사용합니다. 기본 30일 완료율과 확장 6일 완료율은 별도로 기록합니다.</p>
+      </div>
+      <p id="extPt">0 / 6 완료</p>
+      <div class="progress extension-progress"><div id="extBar"></div></div>
+      <article class="day" data-date="2026-10-26"><div><b>Day 31</b><span>2026-10-26 · CS146S · Fall 2026</span><h3>The Modern Software Developer</h3></div><div class="links"><a href="days/day31_2026-10-26_pc.html">💻 PC 학습</a><a href="days/day31_2026-10-26_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="31" data-extension="1"> 완료</label></article>
+      <article class="day" data-date="2026-10-27"><div><b>Day 32</b><span>2026-10-27 · CS229 · Summer 2026</span><h3>Machine Learning Foundations</h3></div><div class="links"><a href="days/day32_2026-10-27_pc.html">💻 PC 학습</a><a href="days/day32_2026-10-27_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="32" data-extension="1"> 완료</label></article>
+      <article class="day" data-date="2026-10-28"><div><b>Day 33</b><span>2026-10-28 · CS234 · Winter 2026</span><h3>Reinforcement Learning</h3></div><div class="links"><a href="days/day33_2026-10-28_pc.html">💻 PC 학습</a><a href="days/day33_2026-10-28_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="33" data-extension="1"> 완료</label></article>
+      <article class="day" data-date="2026-10-29"><div><b>Day 34</b><span>2026-10-29 · CS231N · Spring 2026</span><h3>Deep Learning for Computer Vision</h3></div><div class="links"><a href="days/day34_2026-10-29_pc.html">💻 PC 학습</a><a href="days/day34_2026-10-29_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="34" data-extension="1"> 완료</label></article>
+      <article class="day" data-date="2026-10-30"><div><b>Day 35</b><span>2026-10-30 · CS25 · Spring 2026</span><h3>Transformers United · Research Frontiers</h3></div><div class="links"><a href="days/day35_2026-10-30_pc.html">💻 PC 학습</a><a href="days/day35_2026-10-30_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="35" data-extension="1"> 완료</label></article>
+      <article class="day" data-date="2026-11-02"><div><b>Day 36</b><span>2026-11-02 · CS230 · 공개 사이트 2025 · 영상 Fall 2018</span><h3>Deep Learning &amp; ML Project Strategy</h3></div><div class="links"><a href="days/day36_2026-11-02_pc.html">💻 PC 학습</a><a href="days/day36_2026-11-02_mobile.html">📱 모바일 학습</a></div><label><input type="checkbox" data-day="36" data-extension="1"> 완료</label></article>
+    </section>
   </div>
 </main>
 <script>
-  const boxes=[...document.querySelectorAll('[data-day]')];
+  const coreBoxes=[...document.querySelectorAll('[data-day]:not([data-extension])')];
+  const extensionBoxes=[...document.querySelectorAll('[data-day][data-extension]')];
+  const boxes=[...coreBoxes,...extensionBoxes];
   const rows=[...document.querySelectorAll('.day')];
   const keyFor=day=>`stanford-day-${day}-done`;
 
@@ -126,14 +130,20 @@
   }
 
   function renderProgress(){
-    let n=0;
+    let core=0;
+    let extension=0;
     boxes.forEach(box=>{
       box.checked=localStorage.getItem(keyFor(box.dataset.day))==='1';
       box.closest('.day').classList.toggle('done',box.checked);
-      if(box.checked)n++;
+      if(box.checked){
+        if(box.dataset.extension) extension++;
+        else core++;
+      }
     });
-    document.getElementById('pt').textContent=`${n} / 30 완료`;
-    document.getElementById('bar').style.width=(n/30*100)+'%';
+    document.getElementById('pt').textContent=`${core} / 30 완료`;
+    document.getElementById('bar').style.width=(core/30*100)+'%';
+    document.getElementById('extPt').textContent=`${extension} / 6 완료`;
+    document.getElementById('extBar').style.width=(extension/6*100)+'%';
   }
 
   function renderFocus(){
@@ -143,7 +153,7 @@
     let label='오늘 학습';
     if(!target){
       target=rows.find(row=>row.dataset.date>today);
-      label=target?'다음 학습':'30일 과정 종료';
+      label=target?'다음 학습':'전체 일정 종료';
     }
     const focus=document.getElementById('focusText');
     if(!target){focus.textContent=label;return}

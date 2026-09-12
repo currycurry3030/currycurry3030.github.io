@@ -1,0 +1,57 @@
+window.STUDY_DAY = {
+  "day": 31,
+  "date": "2026-10-26",
+  "course": "CS146S · Fall 2026",
+  "title": "The Modern Software Developer",
+  "subtitle": "MCP, agent skills, spec-driven development, loop engineering, software factory를 기존 30일 학습 형식으로 정리한다.",
+  "systemPosition": "Extension · AI-native Software Engineering",
+  "systemMapping": "Agent를 단순 코딩 보조가 아니라 명시적 context, tool, spec, eval loop를 가진 개발 시스템으로 다루는 관점을 익힌다. 공개 예시는 synthetic/generalized 형태만 사용한다.",
+  "progressKey": "stanford-study-day31-progress-v3",
+  "pcFile": "day31_2026-10-26_pc.html",
+  "mobileFile": "day31_2026-10-26_mobile.html",
+  "sourceLinks": [
+    {"label": "CS146S Fall 2026", "url": "https://themodernsoftware.dev/"}
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Course Topic · Context & MCP",
+      "title": "Agent가 일할 수 있는 Context와 MCP",
+      "core": ["Coding agent의 성능은 모델만큼이나 어떤 context와 tool을 노출하는지에 좌우된다.", "MCP는 model과 외부 도구·데이터 소스 사이의 연결 방식을 표준화하려는 인터페이스다.", "도구를 많이 연결하는 것보다 필요한 capability만 명확하게 노출하는 것이 reliability에 유리하다."],
+      "easy": "신입 개발자에게 회사 전체 시스템 접근권한을 주는 것보다, 지금 작업에 필요한 문서와 명령만 정확히 알려주는 편이 실수가 적다. Agent도 같다. MCP는 이런 도구 연결 방식을 정리하는 공용 규격에 가깝다.",
+      "professor": "CS146S가 강조하는 변화는 코드를 직접 입력하는 능력에서 agent가 작업할 환경을 설계하는 능력으로 무게중심이 이동했다는 점이다. 따라서 prompt 한 줄보다 repository context, tool contract, read/write permission, failure behavior가 더 중요한 설계 대상이 된다.",
+      "practical": "대용량 공정 DB를 연결한 agent라면 unrestricted SQL보다 schema-aware query tool, row-limit, timeout, dry-run, aggregation-first 정책을 capability로 설계하는 편이 안전하다. MCP는 연결 규격이고, 실제 안전성은 tool contract와 guardrail이 책임져야 한다.",
+      "terms": [["Context engineering", "Agent가 작업에 필요한 정보와 제약을 선택·구성하는 설계"], ["MCP", "Model Context Protocol, 모델과 외부 context/tool 연결을 표준화하는 프로토콜"], ["Tool contract", "도구 입력·출력·권한·실패 동작을 명시한 인터페이스"]],
+      "quiz": [["Agent에 모든 데이터와 도구를 한꺼번에 주는 것이 위험한 이유는?", "불필요한 context와 권한이 늘어 선택 오류, 비용, 보안·실행 위험이 커지기 때문이다."], ["MCP와 tool guardrail의 역할 차이는?", "MCP는 연결 인터페이스이고 guardrail은 허용 범위와 안전한 실행 정책을 정의한다."]]
+    },
+    {
+      "sourceLabel": "Course Topic · Agent Skills & Specs",
+      "title": "Agent Skills와 Spec-driven Development",
+      "core": ["반복 작업은 재사용 가능한 skill로 캡슐화할수록 agent 동작이 일관된다.", "Spec은 자연어 요구를 실행·검증 가능한 조건으로 바꾸는 중간 산출물이다.", "좋은 spec은 기능 요구뿐 아니라 입력, 출력, 예외, 완료 조건을 포함한다."],
+      "easy": "매번 요리사에게 '맛있게 만들어줘'라고 말하는 대신 레시피와 완성 기준을 주는 것과 같다. Skill은 재사용 레시피, spec은 이번 주문의 정확한 요구사항이다.",
+      "professor": "Agent가 강해질수록 모호한 지시도 어느 정도 처리하지만, 장기 작업에서는 작은 해석 차이가 누적된다. 그래서 제품 요구를 작업 단위와 acceptance criteria로 분해하고, 반복 패턴을 skill로 재사용하는 방식이 중요해진다.",
+      "practical": "분석 agent라면 '원인 찾아줘' 대신 기간 비교, key metric, 허용 query 비용, evidence 표기, 결론 형식을 spec으로 둔다. 자주 쓰는 '기간 비교→변수 변화→이상치→근거 요약'을 skill로 만들면 실행 품질을 표준화할 수 있다.",
+      "terms": [["Agent skill", "특정 작업 절차와 지식을 재사용 가능하게 캡슐화한 단위"], ["Specification", "요구사항을 명시적으로 정의한 문서 또는 구조"], ["Acceptance criteria", "작업이 완료되었다고 판단하는 검증 가능한 조건"]],
+      "quiz": [["Spec이 prompt보다 특히 중요한 상황은?", "여러 단계가 이어지고 결과를 자동 검증해야 하는 장기 작업이다."], ["Skill로 만들기 좋은 작업의 특징은?", "절차가 반복되고 입력·출력·검증 기준을 비교적 안정적으로 정의할 수 있는 작업이다."]]
+    },
+    {
+      "sourceLabel": "Course Topic · Loop Engineering",
+      "title": "Plan → Build → Evaluate → Improve Loop",
+      "core": ["Agent workflow는 한 번의 생성보다 반복 loop로 품질을 높이는 구조가 중요하다.", "평가는 최종 결과뿐 아니라 중간 tool call과 실패 유형까지 관찰해야 한다.", "자동 수정 loop에는 반드시 stop condition과 budget이 필요하다."],
+      "easy": "초안을 한 번 쓰고 끝내는 것이 아니라 시험하고 틀린 부분을 고치는 과정을 반복하는 것이다. 다만 시험 횟수 제한이 없으면 같은 문제를 계속 고치다 무한 반복할 수 있다.",
+      "professor": "Loop engineering은 모델에게 '더 잘해봐'라고 재요청하는 것이 아니다. planning, execution, evaluator, feedback, retry 정책을 분리하고 각 단계의 성공 조건을 명시하는 시스템 설계다. 반복이 늘수록 비용과 latency도 늘기 때문에 quality-budget trade-off를 관리해야 한다.",
+      "practical": "Recipe/분석 agent에서는 query 실패나 truncated 결과를 그대로 다음 reasoning에 넣지 말고, row-count 확인→집계→샘플→필요 시 상세 조회처럼 복구 경로를 설계한다. max_steps, token budget, tool-call budget도 함께 둔다.",
+      "terms": [["Loop engineering", "Agent의 반복 실행·평가·개선 과정을 시스템적으로 설계하는 것"], ["Evaluator", "출력이나 실행 결과를 기준에 따라 판정하는 구성요소"], ["Stop condition", "반복을 종료하는 명시적 조건"]],
+      "quiz": [["Self-correction loop에 stop condition이 필요한 이유는?", "실패가 반복될 때 무한 루프와 비용 폭증을 막기 위해서다."], ["최종 답만 평가하면 놓치기 쉬운 것은?", "중간 tool misuse, 불필요한 query, 잘못된 retry 같은 process-level 실패다."]]
+    },
+    {
+      "sourceLabel": "Course Topic · Software Factory",
+      "title": "Software Factory와 Human Review",
+      "core": ["Software factory 관점에서는 agent가 coding, test, review, deploy의 여러 단계에 참여한다.", "자동화율을 높여도 high-impact 변경에는 human review와 traceability가 필요하다.", "속도보다 재현 가능한 build/test/eval pipeline을 만드는 것이 장기적으로 중요하다."],
+      "easy": "한 명의 천재 개발자가 모든 것을 하는 것이 아니라, 요구사항을 넣으면 설계·코딩·테스트·검토가 이어지는 생산라인을 만드는 생각이다. 사람은 중요한 승인과 예외 판단에 집중한다.",
+      "professor": "AI-native software development의 목표는 단순 code generation 속도를 높이는 데 있지 않다. agent가 반복 가능한 production process 안에 들어가고, 결과가 다시 다음 iteration의 context와 eval로 축적되는 구조를 만드는 것이다.",
+      "practical": "업무 agent 개발도 동일하다. synthetic regression set, query safety test, tool contract test, model/harness version 기록을 CI에 넣으면 모델이 바뀌어도 품질 변화를 추적할 수 있다. 운영 반영은 engineer approval gate 뒤에 둔다.",
+      "terms": [["Software factory", "AI와 자동화가 반복 가능한 개발 생산라인을 구성하는 관점"], ["Traceability", "어떤 입력·버전·도구·결정으로 결과가 만들어졌는지 추적 가능성"], ["Approval gate", "고위험 변경 전에 사람이 승인하는 제어 지점"]],
+      "quiz": [["Software factory가 단순 코드 생성 자동화와 다른 점은?", "테스트·평가·리뷰·배포까지 연결된 반복 가능한 전체 개발 시스템을 다룬다."], ["고위험 업무에서 human review를 남겨야 하는 이유는?", "모델과 자동 평가가 놓치는 맥락·안전·책임 판단을 최종적으로 통제하기 위해서다."]]
+    }
+  ]
+};
