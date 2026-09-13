@@ -2,11 +2,11 @@
 
 ## 목표
 
-기존 공개 GitHub Pages 사이트 `currycurry3030.github.io`를 유지하면서, 이번에 만든 30일 Stanford AI 학습자료를 독립적인 하위 경로 `/stanford-ai-study/`에 배포한다.
+기존 공개 GitHub Pages 사이트 `bjpark-lab.github.io`를 유지하면서, 이번에 만든 30일 Stanford AI 학습자료를 독립적인 하위 경로 `/stanford-ai-study/`에 배포한다.
 
 최종 사용자 URL은 다음을 목표로 한다.
 
-- `https://currycurry3030.github.io/stanford-ai-study/`
+- `https://bjpark-lab.github.io/stanford-ai-study/`
 
 ## 현재 사이트 제약
 
@@ -17,7 +17,7 @@
 ## 배포 구조
 
 ```text
-currycurry3030.github.io/
+bjpark-lab.github.io/
 ├── ...기존 Chirpy 사이트...
 └── stanford-ai-study/
     ├── index.html

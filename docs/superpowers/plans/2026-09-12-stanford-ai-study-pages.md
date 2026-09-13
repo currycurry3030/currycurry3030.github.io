@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Publish the validated 30-day Stanford AI study bundle at `https://currycurry3030.github.io/stanford-ai-study/` without changing the existing Chirpy site behavior.
+**Goal:** Publish the validated 30-day Stanford AI study bundle at `https://bjpark-lab.github.io/stanford-ai-study/` without changing the existing Chirpy site behavior.
 
 **Architecture:** Add one isolated static subtree, `stanford-ai-study/`, to the existing GitHub Pages repository. Keep every learning page self-contained HTML with relative links so Jekyll copies the subtree into `_site` unchanged while the existing Pages workflow continues to build and deploy the root site.
 
@@ -79,6 +79,6 @@
 
 - [ ] **Step 1:** Check workflow runs triggered by the merged commit/push.
 - [ ] **Step 2:** Confirm the Pages build/deploy completes successfully; if it fails, inspect the failing job/log before making further changes.
-- [ ] **Step 3:** Open `https://currycurry3030.github.io/stanford-ai-study/`.
+- [ ] **Step 3:** Open `https://bjpark-lab.github.io/stanford-ai-study/`.
 - [ ] **Step 4:** Verify at least the master page and representative Day 1/Day 30 links resolve.
 - [ ] **Step 5:** Confirm the root site remains reachable and report the final public URL.
