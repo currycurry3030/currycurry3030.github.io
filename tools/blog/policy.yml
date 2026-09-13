@@ -1,0 +1,83 @@
+# 공개 글 발행 안전 규칙 설정
+# tools/blog/safety_scan.py 가 이 파일을 읽어 초안을 검사한다.
+
+# 절대 공개 금지 — 하나라도 걸리면 발행 차단(BLOCK)
+blocked_patterns:
+  # 회사 관련
+  - pattern: '(?i)\b(삼성전자|samsung)\s*(ds|DS)\b'
+    reason: "재직 회사 부서 직접 언급"
+  - pattern: '(?i)화성사업장|평택사업장|기흥사업장'
+    reason: "사업장명"
+  - pattern: '(?i)\b(lot|LOT)[\s_-]?(id|ID)?[\s:]*[A-Z0-9]{6,}'
+    reason: "lot 식별자로 보이는 문자열"
+  - pattern: '(?i)\b(asml|amat|applied\s*materials|tel|lam\s*research)\b.{0,40}(장비|설비|챔버|레시피)'
+    reason: "장비·레시피 결합 언급"
+  - pattern: '(?i)\b(recipe|레시피)\s*(값|파라미터|parameter)'
+    reason: "공정 레시피 파라미터"
+  - pattern: '(?i)(sec\.co\.kr|samsung\.net|\.sec\.samsung)'
+    reason: "사내 도메인"
+  - pattern: '(?i)\b(사내|내부)\s*(위키|포털|시스템|서버|문서)'
+    reason: "사내 시스템 언급"
+
+  # 개인 금융/자산
+  - pattern: '(?i)\b(내|제)\s*(순자산|총자산|보유\s*현금)\b'
+    reason: "본인 자산 금액 공개"
+  - pattern: '(?i)\b(매수가|평단가|평균단가)\s*[:는은]?\s*[0-9,]+'
+    reason: "실제 매수 단가"
+  - pattern: '(?i)\b(뱅크샐러드|뱅샐)\b.{0,30}\b(내|제)\b'
+    reason: "본인 뱅샐 데이터 직접 공개"
+  - pattern: '(?i)\b(매수|매도)\s*(추천|하세요|하십시오|권합니다|권해)'
+    reason: "투자 권유 — 법적 리스크"
+  - pattern: '(?i)\b(목표가|target\s*price)\s*[0-9,]+'
+    reason: "목표가 제시"
+
+  # 부동산 개인 의사
+  - pattern: '(?i)\b(내가|제가)\s*(매수|매입|계약)\s*(할|하려|예정|고려)'
+    reason: "본인 부동산 매수 의사"
+  - pattern: '(?i)\b(watchlist|관심\s*단지)\b.{0,20}\b(내|제)\b'
+    reason: "본인 관심 단지 목록"
+
+  # 자격증명
+  - pattern: '(?i)(api[_-]?key|secret[_-]?key|bot[_-]?token|access[_-]?token)\s*[=:]\s*\S{12,}'
+    reason: "자격증명으로 보이는 값"
+  - pattern: '(?i)\b[0-9]{8,10}:[A-Za-z0-9_-]{30,}\b'
+    reason: "텔레그램 봇 토큰 형식"
+  - pattern: '(?i)\bsk-[A-Za-z0-9]{20,}\b'
+    reason: "OpenAI 키 형식"
+  - pattern: '(?i)\bghp_[A-Za-z0-9]{20,}\b'
+    reason: "GitHub 토큰 형식"
+
+  # 개인 식별
+  - pattern: '\b01[016789]-?[0-9]{3,4}-?[0-9]{4}\b'
+    reason: "휴대폰 번호"
+  - pattern: '\b[0-9]{6}-[1-4][0-9]{6}\b'
+    reason: "주민등록번호 형식"
+  - pattern: '(?i)/home/bjpark/'
+    reason: "로컬 절대경로 노출"
+  - pattern: '(?i)/mnt/c/Users/'
+    reason: "윈도우 사용자 경로 노출"
+
+# 주의 — 차단하지 않고 검수 시 확인 요청(WARN)
+warn_patterns:
+  - pattern: '(?i)\b(배우자|아내|와이프)\b'
+    reason: "가족 정보 — 공개 범위 확인"
+  - pattern: '(?i)\b(동탄|광교|분당|수지|영통)\b'
+    reason: "거주·관심 지역 — 일반론인지 확인"
+  - pattern: '(?i)\b[가-힣]{2,10}(아파트|자이|캐슬|푸르지오|래미안|e편한세상)\b'
+    reason: "특정 단지명 — 익명화 검토"
+  - pattern: '(?i)\b(삼성전자|SK하이닉스|하이닉스|테슬라|엔비디아|NVIDIA)\b'
+    reason: "개별 종목 언급 — 보유 여부 암시 금지"
+  - pattern: '(?i)\b(회사에서|직장에서|업무에서)\b'
+    reason: "직무 경험 — 일반화 필요"
+
+# 품질 게이트
+quality:
+  min_chars: 1200          # 본문 최소 글자수 (frontmatter 제외)
+  max_chars: 12000
+  require_frontmatter: [title, date, categories, tags]
+  min_headings: 2          # ## 이상 소제목 개수
+  require_disclaimer_categories:   # 이 카테고리면 면책 문구 필수
+    - Finance
+    - RealEstate
+    - Investing
+  disclaimer_text: "이 글은 개인 학습 기록이며 투자 권유가 아닙니다."
