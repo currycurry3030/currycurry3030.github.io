@@ -1,4 +1,5 @@
 name: "Build and Deploy"
+
 on:
   push:
     branches:
@@ -25,31 +26,42 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3
+          ruby-version: "3.3"
           bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # assets/js/dist is gitignored, so the theme's *.min.js must be built here
+      # or every page ships a 404'd script tag.
+      - name: Build assets
+        run: npm ci && npm run build
+
+      - name: Validate Stanford study data
+        run: python3 tools/validate_stanford_study.py
 
       - name: Build site
         run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: "production"
 
-      - name: Validate Stanford study data
-        run: python tools/validate_stanford_study.py
-
       - name: Test site
         run: |
-          bundle exec htmlproofer _site/stanford-ai-study --disable-external --check-html --allow_hash_href
+          bundle exec htmlproofer "_site${{ steps.pages.outputs.base_path }}" \
+            --disable-external --check-html --allow_hash_href
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4

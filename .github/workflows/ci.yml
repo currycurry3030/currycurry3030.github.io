@@ -1,44 +1,41 @@
 name: "CI"
+
 on:
+  pull_request:
   push:
     branches-ignore:
-      - "production"
-      - "docs"
-    paths-ignore:
-      - ".github/**"
-      - "!.github/workflows/ci.yml"
-      - ".gitignore"
-      - "README.md"
-      - "LICENSE"
-  pull_request:
-    paths:
-      - "**"
+      - main
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        ruby: [2.7, 3]
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # for posts's lastmod
+          fetch-depth: 0 # for posts' lastmod
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
+          ruby-version: "3.3"
           bundler-cache: true
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-      - name: Build Assets
-        run: npm i && npm run build
+      - name: Build assets
+        run: npm ci && npm run build
 
-      - name: Test Site
+      - name: Lint styles
+        run: npm test
+
+      - name: Validate Stanford study data
+        run: python3 tools/validate_stanford_study.py
+
+      - name: Build and test site
         run: bash tools/test

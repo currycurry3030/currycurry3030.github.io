@@ -24,7 +24,23 @@ A 30-day learning path covering CS224N, CS336, CS329Z, and CS329A topics with da
 - `_posts/` — public technical notes
 - `_tabs/` — top-level site navigation
 - `stanford-ai-study/` — standalone interactive learning site
+- `tools/validate_stanford_study.py` — schema + content checks for the study site
 - `_config.yml` — Chirpy/Jekyll site configuration
+
+## Local development
+
+```bash
+npm install        # install the asset toolchain
+npm run build      # build assets/js/dist (gitignored, required by the site)
+npm test           # stylelint the SCSS
+npm run validate   # validate the Stanford study data
+bundle install     # install Jekyll and plugins
+bash tools/run     # serve the site locally
+bash tools/test    # production build + htmlproofer
+```
+
+`assets/js/dist` is not committed, so `npm run build` must run before any Jekyll
+build — CI does this in both workflows.
 
 ## Public-content rule
 
