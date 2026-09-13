@@ -6,6 +6,12 @@ order: 0
 
 AI/LLM/Agent 학습 자료를 모아두는 허브입니다.
 
+## We Must Pace the Frontier
+
+Dario Amodei의 frontier pacing 논지와 Amodei · Altman · Hassabis의 접근을 비교한 11장 슬라이드 브리핑입니다.
+
+[슬라이드 브리핑 열기](/ai-frontier-pacing/){: .btn .btn-primary }
+
 ## Stanford AI 30-Day Study
 
 CS224N → CS336 → CS329Z → CS329A 흐름으로 LLM foundation부터 agentic AI, evaluation, closed-loop improvement까지 연결합니다.
