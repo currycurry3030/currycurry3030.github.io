@@ -1,0 +1,240 @@
+{
+  "day": 14,
+  "date": "2026-10-01",
+  "course": "CS329Z",
+  "courseLabel": "CS329Z",
+  "title": "RAG · Grounding & Retrieval",
+  "subtitle": "문서 chunk 검색을 넘어 Evaluation Case를 조건·적용성·provenance로 retrieval하는 구조를 설계한다.",
+  "systemPosition": "Loop 2 · Process Memory Retrieval",
+  "systemMapping": "Current Context와 유사한 case를 hard filter → semantic recall → rerank → evidence load → applicability 순으로 검색한다.",
+  "progressKey": "stanford-study-day14-progress-v3",
+  "file": "day14_2026-10-01.html",
+  "sourceLinks": [
+    {
+      "label": "CS329Z RAG 일정",
+      "url": "https://cs329z.stanford.edu/"
+    },
+    {
+      "label": "RAG paper",
+      "url": "https://arxiv.org/abs/2005.11401"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · Retrieval Unit",
+      "title": "무엇을 검색 단위로 삼을 것인가",
+      "core": [
+        "Chunk size는 recall과 context coherence를 바꾼다.",
+        "Arbitrary chunk보다 domain event/case 단위가 더 의미 있는 경우가 있다.",
+        "Retrieval unit은 downstream 판단에서 필요한 context boundary를 반영해야 한다."
+      ],
+      "easy": "문서를 500자씩 기계적으로 자르면 한 평가의 조건과 결론이 서로 다른 조각에 떨어질 수 있다. 평가 1건을 하나의 사건 단위로 묶으면 의미가 유지된다.",
+      "professor": "RAG 강의의 chunking 문제를 domain schema로 확장하면 “semantic unit”이 중요해진다. Text length가 아니라 task가 필요로 하는 정보 묶음을 기준으로 본다.",
+      "practical": "Process Memory에서는 `Evaluation Case`가 1차 retrieval unit이다. case에 intent, conditions, delta, result, interpretation, conclusion, evidence ref를 함께 둬 context coherence를 보존한다.",
+      "terms": [
+        [
+          "Retrieval unit",
+          "검색 index에서 하나의 후보로 다루는 정보 단위"
+        ],
+        [
+          "Chunking",
+          "문서를 검색 가능한 작은 단위로 나누는 과정"
+        ],
+        [
+          "Context coherence",
+          "한 판단에 필요한 정보가 같은 단위 안에 함께 유지되는 정도"
+        ]
+      ],
+      "quiz": [
+        [
+          "Evaluation Case를 unit으로 쓰는 장점은?",
+          "평가 조건·결과·해석·evidence가 한 event boundary 안에 유지된다."
+        ],
+        [
+          "고정 500자 chunk의 위험은?",
+          "논리적으로 연결된 조건과 결론이 분리될 수 있다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Recall",
+      "title": "Dense/Sparse/Hybrid Retrieval",
+      "core": [
+        "Dense embedding은 semantic similarity에 강하고 sparse lexical search는 exact term에 강하다.",
+        "Domain ID·step code·약어는 lexical/metadata signal이 중요할 수 있다.",
+        "Hybrid retrieval은 서로 다른 signal을 결합해 recall을 높인다."
+      ],
+      "easy": "비슷한 뜻을 찾는 사람과 정확한 코드 번호를 찾는 사람을 함께 쓰는 셈이다.",
+      "professor": "RAG에서 embedding만 강조하면 exact identifier가 중요한 enterprise workload를 놓칠 수 있다. 반대로 keyword만 쓰면 표현이 다른 유사 case를 못 찾는다.",
+      "practical": "Recipe/step family는 metadata/sparse signal, 평가 의도와 현상은 dense semantic signal을 활용한다. 후보 recall을 넓힌 뒤 reranker에서 적용성을 정교하게 판단한다.",
+      "terms": [
+        [
+          "Dense retrieval",
+          "embedding vector similarity 기반 검색"
+        ],
+        [
+          "Sparse retrieval",
+          "term occurrence/weight 기반 검색"
+        ],
+        [
+          "Hybrid search",
+          "dense와 sparse/metadata signal을 결합한 검색"
+        ]
+      ],
+      "quiz": [
+        [
+          "공정 step code 검색에서 sparse signal이 유용한 이유는?",
+          "정확한 문자열 일치가 의미상 유사도보다 중요할 수 있기 때문이다."
+        ],
+        [
+          "Hybrid 검색의 목적은?",
+          "서로 다른 retrieval signal의 약점을 보완해 recall을 높이는 것이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Hard Filter",
+      "title": "Structured Metadata와 Hard Filter",
+      "core": [
+        "검색 전에 명백히 적용 불가능한 case를 structured filter로 제거할 수 있다.",
+        "Filter가 너무 강하면 relevant case recall을 잃을 수 있다.",
+        "Filter field는 domain semantics와 data quality를 함께 검토해야 한다."
+      ],
+      "easy": "다른 제품/공정 단계의 사례를 처음부터 제외하는 식이다. 다만 잘못된 metadata가 있으면 좋은 사례까지 제거될 수 있다.",
+      "professor": "Semantic retrieval 앞에 filter를 두는 것은 efficiency와 precision에 도움되지만, hard condition의 정의를 신중히 해야 한다. “비슷해 보임”과 “적용 가능함”은 다르다.",
+      "practical": "process/step/recipe family/time window 같은 structured field를 사용하되, filter reason을 trace에 남긴다. 신규 공정처럼 exact match가 없을 때는 fallback 범위를 단계적으로 넓힌다.",
+      "terms": [
+        [
+          "Hard filter",
+          "조건을 만족하지 않는 후보를 retrieval 전/후 명시적으로 제거"
+        ],
+        [
+          "Metadata",
+          "case의 구조화 속성"
+        ],
+        [
+          "Fallback retrieval",
+          "엄격 조건에서 결과가 없을 때 검색 범위를 단계적으로 넓히는 전략"
+        ]
+      ],
+      "quiz": [
+        [
+          "Hard filter가 recall을 해칠 수 있는 경우는?",
+          "metadata가 틀리거나 지나치게 세부 조건을 요구할 때다."
+        ],
+        [
+          "Filter reason을 trace에 남기는 이유는?",
+          "왜 특정 case가 제외/포함됐는지 감사와 debugging이 가능해진다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Reranking",
+      "title": "Reranking과 Applicability",
+      "core": [
+        "초기 retriever는 넓게 recall하고 reranker는 현재 query와 candidate 관계를 더 정밀하게 평가한다.",
+        "Text similarity와 domain applicability는 별도 score일 수 있다.",
+        "Top-k는 token budget과 evidence diversity를 함께 고려한다."
+      ],
+      "easy": "1차 검색에서 후보 50명을 모은 뒤, 실제 조건과 가장 잘 맞는 5명을 면접으로 고르는 과정이다.",
+      "professor": "Cross-encoder/late-interaction reranking을 배우는 이유는 cheap recall과 expensive precision을 분리하기 위해서다. Domain system에서는 applicability feature를 추가할 수 있다.",
+      "practical": "Rerank feature: intent similarity, condition match, recipe delta overlap, metric target match, case recency, evidence completeness. 최종 top-k가 같은 패턴만 반복하지 않도록 diversity도 본다.",
+      "terms": [
+        [
+          "Reranker",
+          "초기 후보를 더 정교하게 재정렬하는 모델/규칙"
+        ],
+        [
+          "Applicability",
+          "과거 case가 현재 상황에 실제로 적용 가능한 정도"
+        ],
+        [
+          "Top-k",
+          "상위 k개 후보를 선택하는 retrieval output"
+        ]
+      ],
+      "quiz": [
+        [
+          "Similarity와 applicability를 분리하는 이유는?",
+          "표현이 비슷해도 조건이 달라 현재 문제에 적용 불가능할 수 있기 때문이다."
+        ],
+        [
+          "Top-k를 너무 크게 하면?",
+          "context cost가 늘고 낮은 품질 evidence가 판단을 흐릴 수 있다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Evidence Load",
+      "title": "Conclusion만이 아니라 Evidence까지 불러오기",
+      "core": [
+        "Case summary만 가져오면 원천 근거를 검증하기 어렵다.",
+        "Provenance pointer를 통해 필요한 raw/aggregated evidence로 내려갈 수 있어야 한다.",
+        "모든 raw data를 prompt에 넣기보다 필요한 evidence만 on-demand load한다."
+      ],
+      "easy": "“예전에 이렇게 했다”는 메모만 보는 대신 당시 측정 결과와 조건을 다시 확인할 수 있어야 한다.",
+      "professor": "Grounding은 retrieval result를 믿는 것이 아니라 source까지 traceable하게 만드는 것이다. 이는 hallucination뿐 아니라 stale/incorrect summary를 잡는 데도 중요하다.",
+      "practical": "Evaluation Case는 evidence ref와 query key를 저장한다. Recipe Advisor가 rationale를 만들 때 case conclusion + 핵심 evidence summary를 사용하고, 필요 시 tool로 원천 집계를 다시 확인한다.",
+      "terms": [
+        [
+          "Evidence pointer",
+          "원천 record/query 결과를 다시 찾을 수 있는 참조"
+        ],
+        [
+          "Provenance chain",
+          "summary/claim이 어떤 source와 변환을 거쳤는지 연결한 경로"
+        ],
+        [
+          "On-demand load",
+          "필요할 때만 상세 data를 가져오는 방식"
+        ]
+      ],
+      "quiz": [
+        [
+          "Case conclusion만 저장하면 부족한 이유는?",
+          "잘못된 요약인지 검증하거나 새로운 관점으로 재해석하기 어렵기 때문이다."
+        ],
+        [
+          "Raw data를 항상 prompt에 넣지 않는 이유는?",
+          "token/latency가 커지고 중요한 evidence가 묻힐 수 있기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Retrieval Eval",
+      "title": "Retrieval을 어떻게 평가할까",
+      "core": [
+        "Recall@k는 relevant case가 후보에 포함됐는지 본다.",
+        "Applicability precision은 top-k가 실제 현재 조건에 쓸 수 있는지 본다.",
+        "Evidence coverage와 citation correctness는 retrieval 이후 grounding 품질을 본다."
+      ],
+      "easy": "“정답 문서를 찾았나?”와 “가져온 상위 문서들이 실제로 쓸 만한가?”를 따로 점수화해야 한다.",
+      "professor": "RAG eval은 final answer만 채점하면 retrieval 개선 방향이 보이지 않는다. Golden case set과 hard negative를 만들어 component metric을 측정한다.",
+      "practical": "Process Memory eval set은 current context마다 relevant/irrelevant/applicable/contraindicated case label을 둔다. Retrieval 변경은 동일 holdout set에서 recall, precision, latency, token budget을 비교한다.",
+      "terms": [
+        [
+          "Recall@k",
+          "상위 k개 안에 relevant item이 포함되는 비율"
+        ],
+        [
+          "Precision@k",
+          "상위 k개 중 relevant item 비율"
+        ],
+        [
+          "Hard negative",
+          "표면적으로 유사하지만 실제로는 부적절한 어려운 음성 사례"
+        ]
+      ],
+      "quiz": [
+        [
+          "Retrieval eval에서 hard negative가 중요한 이유는?",
+          "단순 similarity shortcut으로 잘못된 case를 고르는 문제를 드러내기 때문이다."
+        ],
+        [
+          "Final answer score와 retrieval metric을 분리하는 이유는?",
+          "검색 문제인지 generation 문제인지 원인을 구분하기 위해서다."
+        ]
+      ]
+    }
+  ]
+}

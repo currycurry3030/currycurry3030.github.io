@@ -1,0 +1,168 @@
+{
+  "day": 36,
+  "date": "2026-11-02",
+  "course": "CS230 · Public site 2025",
+  "courseLabel": "CS230 · 공개 사이트 2025 · 영상 Fall 2018",
+  "title": "Deep Learning & ML Project Strategy",
+  "subtitle": "Neural network basics, optimization, ML strategy, CNN/sequence model을 실제 프로젝트 운영 관점까지 연결한다.",
+  "systemPosition": "Extension · Deep Learning Project Practice",
+  "systemMapping": "모델 architecture보다 dataset, error analysis, optimization, project iteration을 포함한 end-to-end ML 개발 감각을 복습한다.",
+  "progressKey": "stanford-study-day36-progress-v3",
+  "file": "day36_2026-11-02.html",
+  "sourceLinks": [
+    {
+      "label": "CS230",
+      "url": "https://cs230.stanford.edu/"
+    },
+    {
+      "label": "CS230 Syllabus",
+      "url": "https://cs230.stanford.edu/syllabus/"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Course Modules · Neural Network Basics",
+      "title": "Forward, Backprop, Representation",
+      "core": [
+        "Neural network는 여러 affine/nonlinear transformation을 쌓아 representation을 학습한다.",
+        "Backpropagation은 chain rule을 이용해 loss가 각 parameter에 미치는 gradient를 계산한다.",
+        "깊이가 늘어도 입력·출력 schema와 loss 정의가 잘못되면 성능은 해결되지 않는다."
+      ],
+      "easy": "여러 단계의 변환기를 연결해 원시 입력을 점점 task에 유용한 표현으로 바꾸고, 결과가 얼마나 틀렸는지를 뒤에서 앞으로 전달해 각 변환기를 조정하는 것이 기본 구조다.",
+      "professor": "CS230는 shallow/deep network를 직접 구현하며 forward/backward 계산을 이해한 뒤 실전 프로젝트로 확장한다. 프레임워크가 gradient를 자동 계산해도 tensor shape와 objective를 이해해야 debugging이 가능하다.",
+      "practical": "PyTorch 공정 모델에서는 입력 feature 순서·dtype·shape를 config로 고정하고 inference 시 assert로 검증한다. 좋은 architecture보다 train/serve schema mismatch가 운영 오류를 더 자주 만든다.",
+      "terms": [
+        [
+          "Forward pass",
+          "입력에서 예측까지 network 계산을 수행하는 과정"
+        ],
+        [
+          "Backpropagation",
+          "Chain rule로 gradient를 역방향 계산하는 알고리즘"
+        ],
+        [
+          "Representation",
+          "모델 내부에서 학습된 입력의 feature 표현"
+        ]
+      ],
+      "quiz": [
+        [
+          "Autograd를 써도 backprop 개념을 알아야 하는 이유는?",
+          "Gradient 흐름, detach/in-place 문제, shape 오류와 학습 불안정을 진단하기 위해서다."
+        ],
+        [
+          "운영 추론에서 feature 순서가 바뀌면 왜 위험한가?",
+          "같은 tensor shape라도 각 위치의 의미가 달라져 모델이 잘못된 입력을 정상 입력처럼 처리할 수 있기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Course Modules · Optimization & Regularization",
+      "title": "Initialization, Adam, BatchNorm, Regularization",
+      "core": [
+        "Optimization은 loss landscape에서 안정적으로 좋은 parameter를 찾는 과정이다.",
+        "Initialization, learning rate, Adam, normalization은 gradient scale과 convergence에 큰 영향을 준다.",
+        "Regularization은 training fit을 조금 희생해 unseen data의 generalization을 개선하려는 전략이다."
+      ],
+      "easy": "내리막길을 내려갈 때 너무 큰 걸음을 쓰면 계곡을 뛰어넘고, 너무 작으면 도착이 오래 걸린다. Learning rate와 optimizer는 이 걸음 크기와 방향을 조절한다.",
+      "professor": "CS230의 practical aspects와 optimization module은 모델을 크게 만드는 것보다 안정적인 training recipe를 만드는 법을 강조한다. Gradient checking, initialization, regularization을 통해 '학습이 안 된다'를 체계적으로 분해한다.",
+      "practical": "공정 dataset이 시간에 따라 drift하면 dropout/L2만으로 해결되지 않는다. Train stability와 distribution generalization은 구분해서 보고, time split과 장비/recipe slice 검증을 함께 수행한다.",
+      "terms": [
+        [
+          "Initialization",
+          "학습 시작 시 parameter 값을 설정하는 방법"
+        ],
+        [
+          "Adam",
+          "Momentum과 adaptive learning rate를 결합한 optimizer"
+        ],
+        [
+          "Regularization",
+          "Overfitting을 줄이기 위한 제약 또는 학습 전략"
+        ]
+      ],
+      "quiz": [
+        [
+          "Training loss가 발산할 때 먼저 볼 항목은?",
+          "Learning rate, numerical stability, input scaling, gradient 상태를 우선 점검한다."
+        ],
+        [
+          "Regularization이 distribution shift 자체를 해결하는가?",
+          "아니다. Overfitting 완화에는 도움되지만 새로운 distribution에 대한 검증과 대응은 별도 문제다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Course Modules · ML Strategy",
+      "title": "Error Analysis와 Project Iteration",
+      "core": [
+        "ML project는 metric 하나를 개선하는 것이 아니라 error source를 분해해 다음 실험을 선택하는 과정이다.",
+        "Train/dev/test distribution과 metric이 실제 product objective를 대표해야 한다.",
+        "Human-level baseline, slice analysis, ablation은 개선 우선순위를 정하는 데 유용하다."
+      ],
+      "easy": "시험 점수가 낮다고 무작정 공부 시간을 늘리기보다 계산 실수인지, 개념 부족인지, 시간 부족인지 나눠보는 것이 error analysis다.",
+      "professor": "CS230의 Structuring ML Projects는 모델 선택보다 개발 의사결정 방법을 가르친다. 무엇이 bottleneck인지 진단하지 않고 hyperparameter search를 늘리면 실험 비용만 증가할 수 있다.",
+      "practical": "Recipe/metrology 모델에서도 전체 MAE를 장비, 기간, recipe family, target range, OOD 여부로 분해한다. 데이터 문제인지 모델 capacity 문제인지 먼저 판별한 뒤 feature/architecture/label 개선 순서를 정한다.",
+      "terms": [
+        [
+          "Error analysis",
+          "실패 sample을 유형별로 나눠 원인과 개선 우선순위를 찾는 과정"
+        ],
+        [
+          "Ablation",
+          "구성요소를 제거/변경해 성능 기여를 확인하는 실험"
+        ],
+        [
+          "Slice",
+          "특정 조건으로 분리한 데이터 부분집합"
+        ]
+      ],
+      "quiz": [
+        [
+          "모델 성능 개선 전에 error slice를 보는 이유는?",
+          "어떤 조건에서 실패가 집중되는지 알아야 가장 효과적인 개선 방향을 고를 수 있기 때문이다."
+        ],
+        [
+          "Dev set metric이 실제 목적과 다르면 어떤 문제가 생기는가?",
+          "Metric을 최적화해도 실제 업무 가치나 안전성이 좋아지지 않을 수 있다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Course Modules · CNN, Sequence Models & Transformers",
+      "title": "Task에 맞는 Architecture 선택",
+      "core": [
+        "CNN은 spatial locality, RNN은 sequential state, Transformer는 attention 기반 global interaction이라는 서로 다른 inductive bias를 가진다.",
+        "Architecture는 input modality와 data 규모, latency, transfer learning 가능성을 함께 고려해 선택한다.",
+        "새 모델이 항상 기존 baseline보다 운영 관점에서 우월한 것은 아니다."
+      ],
+      "easy": "사진에는 가까운 픽셀 구조가 중요하고, 시계열에는 순서가 중요하며, 문장에는 멀리 떨어진 관계가 중요할 수 있다. 모델은 이런 구조를 어떤 방식으로 잘 활용하도록 설계됐는지가 다르다.",
+      "professor": "CS230 syllabus는 CNN, RNN/sequence model, Transformer까지 이어지지만 핵심은 각 architecture를 언제 쓰는지 판단하는 것이다. 프로젝트에서는 구현 난이도와 serving cost까지 포함한 baseline 대비 이득을 확인해야 한다.",
+      "practical": "공정 tabular data라면 먼저 tree/MLP baseline을 만들고, 시계열 dependence가 명확할 때 temporal model을 추가한다. 복잡한 Transformer를 도입할 때는 feature engineering baseline 대비 실질적 gain과 inference cost를 함께 보고 결정한다.",
+      "terms": [
+        [
+          "Inductive bias",
+          "Model 구조가 문제에 대해 미리 가정하는 패턴"
+        ],
+        [
+          "Baseline",
+          "새 접근의 이득을 비교하기 위한 단순하고 재현 가능한 기준 모델"
+        ],
+        [
+          "Transfer learning",
+          "다른 dataset/task에서 배운 parameter나 representation을 재사용하는 방법"
+        ]
+      ],
+      "quiz": [
+        [
+          "복잡한 architecture를 도입하기 전에 baseline이 필요한 이유는?",
+          "추가 복잡도와 비용이 실제 성능 이득을 만드는지 비교할 기준이 필요하기 때문이다."
+        ],
+        [
+          "Tabular 공정 데이터에 Transformer가 항상 유리한가?",
+          "아니다. 데이터 구조와 규모에 따라 tree/MLP가 더 단순하고 강한 baseline일 수 있어 실증 비교가 필요하다."
+        ]
+      ]
+    }
+  ]
+}

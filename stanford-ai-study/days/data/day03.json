@@ -1,0 +1,204 @@
+{
+  "day": 3,
+  "date": "2026-09-16",
+  "course": "CS224N",
+  "courseLabel": "CS224N",
+  "title": "Post-training: SFT / RLHF / DPO",
+  "subtitle": "Pretrained LM을 실제 assistant behavior로 바꾸는 SFT·preference optimization과 그 한계를 연결한다.",
+  "systemPosition": "Loop 1 · Knowledge Extraction Harness",
+  "systemMapping": "Evaluation Case 생성에서 schema 준수, evidence 인용, abstention과 human preference를 다루는 behavior layer에 해당한다.",
+  "progressKey": "stanford-study-day03-progress-v3",
+  "file": "day03_2026-09-16.html",
+  "sourceLinks": [
+    {
+      "label": "2026 Post-training 슬라이드",
+      "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf"
+    },
+    {
+      "label": "DPO paper",
+      "url": "https://arxiv.org/abs/2305.18290"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · Why Post-training",
+      "title": "왜 Pretrained LM을 그대로 쓰지 않나",
+      "core": [
+        "Pretraining objective는 다음 token likelihood이지 helpful assistant behavior 자체가 아니다.",
+        "Post-training은 instruction following, format, preference, safety 같은 사용 목적을 추가로 학습한다.",
+        "Capability와 behavior alignment는 구분해서 생각해야 한다."
+      ],
+      "easy": "박식한 사람에게 회사 상담 업무를 바로 맡긴다고 생각해보면 된다. 지식이 많아도 질문에 맞게 답하고, 규칙을 지키고, 모르면 보류하는 업무 방식은 별도 교육이 필요하다.",
+      "professor": "Day 2 마지막에 pretraining의 control 한계를 봤기 때문에 Day 3은 자연스럽게 어떻게 행동을 바꿀까로 이어진다. 중요한 포인트는 post-training이 없는 지식을 마법처럼 만들어주는 과정이 아니라, 이미 가진 representation을 특정 interaction 목표에 맞게 조정하는 과정이라는 점이다.",
+      "practical": "Knowledge Extraction Harness에서는 base model이 Evaluation Case schema를 정확히 채우고 evidence가 없을 때 abstain하도록 만드는 behavior가 중요하다. 하지만 post-training만 믿지 않고 deterministic schema validation과 provenance check를 함께 둬야 한다.",
+      "terms": [
+        [
+          "Post-training",
+          "pretrained model을 instruction/preference 목적에 맞게 조정하는 단계"
+        ],
+        [
+          "Alignment",
+          "모델 behavior를 원하는 가치/목표/규칙에 맞추는 과정"
+        ],
+        [
+          "Capability vs behavior",
+          "할 수 있는 능력과 실제로 어떻게 행동하는지를 구분하는 관점"
+        ]
+      ],
+      "quiz": [
+        [
+          "Post-training이 pretraining과 다른 가장 큰 목적은?",
+          "범용 예측 능력을 실제 사용자 지시와 선호에 맞는 behavior로 조정하는 것이다."
+        ],
+        [
+          "Schema 준수를 post-training만으로 보장하면 안 되는 이유는?",
+          "확률적 모델이라 실패할 수 있어 deterministic validation이 추가로 필요하기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · SFT",
+      "title": "Supervised Fine-Tuning",
+      "core": [
+        "SFT는 instruction과 target response 쌍으로 원하는 답변 패턴을 직접 모방하게 한다.",
+        "소수의 고품질 예제가 대량의 noisy 예제보다 behavior 학습에 더 유리할 수 있다.",
+        "SFT data의 coverage가 부족하면 새로운 edge case에서 일반화가 깨질 수 있다."
+      ],
+      "easy": "신입에게 좋은 보고서 예시를 보여주고 그대로 작성 연습을 시키는 것과 비슷하다. 무엇을 써야 하는지 명확하지만, 예시와 다른 상황에서 스스로 판단하는 능력까지 자동으로 보장되지는 않는다.",
+      "professor": "교수는 SFT를 가장 단순하고 안정적인 post-training 출발점으로 설명한 뒤, 정답 response를 직접 쓰기 어렵거나 여러 답이 가능한 경우로 문제를 확장한다. 그 지점에서 preference data와 RLHF가 등장한다.",
+      "practical": "Evaluation Case의 intent/conditions/result/interpretation/conclusion/evidence 구조를 잘 채운 전문가 승인 예시를 SFT data로 만들 수 있다. 그러나 원천 evidence가 틀린 예시를 많이 넣으면 형식은 예뻐져도 grounding quality는 악화된다. data curation이 핵심이다.",
+      "terms": [
+        [
+          "SFT",
+          "supervised example로 instruction-following behavior를 학습하는 과정"
+        ],
+        [
+          "Demonstration",
+          "입력에 대해 바람직한 target output을 보여주는 예시"
+        ],
+        [
+          "Coverage",
+          "학습 data가 실제 상황의 다양한 경우를 얼마나 포함하는지"
+        ]
+      ],
+      "quiz": [
+        [
+          "SFT가 특히 잘 맞는 문제는?",
+          "원하는 출력 형태와 좋은 답의 예시를 명확히 제공할 수 있는 문제다."
+        ],
+        [
+          "Evaluation Case SFT data에서 quality를 판단할 핵심은?",
+          "형식뿐 아니라 evidence와 실제 source의 일치 여부다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Preference & RLHF",
+      "title": "Preference Learning과 RLHF",
+      "core": [
+        "여러 가능한 답 중 사람이 더 선호하는 출력을 비교 data로 수집할 수 있다.",
+        "Reward model은 사람 preference를 근사하고 RL은 그 reward를 높이는 방향으로 policy를 조정한다.",
+        "Reward proxy가 실제 품질을 완벽히 대표하지 않으면 reward hacking/overoptimization이 생길 수 있다."
+      ],
+      "easy": "모범답안을 하나 쓰기 어렵다면 두 답을 보여주고 어느 쪽이 더 낫나를 묻는 것이 더 쉬울 수 있다. 이 비교를 많이 모아 선호 점수기를 만들고, 모델이 그 점수를 높이는 답을 내도록 조정하는 방식이 RLHF의 직관이다.",
+      "professor": "SFT가 보여준 답을 따라 하기라면 RLHF는 여러 답 중 더 좋은 방향으로 밀기다. 강의에서는 여기서 proxy optimization의 위험을 함께 다뤄야 한다. 사람 preference가 noisy하거나 reward model이 편향되면 모델은 실제 유용성보다 점수 규칙을 공략할 수 있다.",
+      "practical": "Recipe candidate rationale를 평가할 때 엔지니어의 accept/edit/reject preference를 수집할 수 있다. 다만 생산성만 reward로 두면 위험한 recipe를 공격적으로 제안하는 방향으로 왜곡될 수 있으므로 constraint/safety는 hard gate로 분리하는 편이 낫다.",
+      "terms": [
+        [
+          "Preference data",
+          "두 개 이상 출력 중 더 나은 것을 선택한 비교 supervision"
+        ],
+        [
+          "Reward model",
+          "사람 선호를 scalar score로 근사하는 모델"
+        ],
+        [
+          "Reward hacking",
+          "실제 목표보다 reward proxy의 허점을 최적화하는 현상"
+        ]
+      ],
+      "quiz": [
+        [
+          "Preference data가 demonstration보다 쉬울 수 있는 이유는?",
+          "정답 전체를 작성하지 않고 두 후보 중 더 나은 것을 선택하면 되기 때문이다."
+        ],
+        [
+          "Recipe Advisor에서 safety를 reward 하나에 섞지 않는 이유는?",
+          "proxy 최적화 과정에서 hard safety constraint가 희생될 수 있기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · DPO",
+      "title": "DPO: Reward Model을 명시적으로 쓰지 않는 Preference Optimization",
+      "core": [
+        "DPO는 chosen/rejected response pair에서 직접 policy를 최적화하는 간결한 접근이다.",
+        "Reference policy와의 상대적 log-probability를 이용해 preference를 반영한다.",
+        "RLHF pipeline을 단순화하지만 preference data quality와 distribution 문제는 여전히 남는다."
+      ],
+      "easy": "좋은 답은 확률을 올리고 나쁜 답은 내리되, 원래 모델에서 너무 멀리 튀지 않게 하자는 방향으로 생각하면 된다. 중간에 별도의 reward model을 학습하고 RL loop를 돌리는 복잡성을 줄인다.",
+      "professor": "DPO가 소개되는 이유는 RLHF가 개념적으로 강력하지만 pipeline이 복잡하고 불안정할 수 있기 때문이다. 그렇다고 DPO가 preference 문제 자체를 없애는 것은 아니다. 무엇을 chosen/rejected로 정의했는지, data가 실제 deployment 상황을 대표하는지가 더 중요하다.",
+      "practical": "엔지니어 preference를 DPO pair로 만들 수 있지만 좋아 보이는 설명만 chosen으로 두면 근거 품질이 희생될 수 있다. chosen criterion에 evidence correctness, constraint compliance, actionability를 포함시키거나 별도 validator로 분리해야 한다.",
+      "terms": [
+        [
+          "DPO",
+          "preference pair로 policy를 직접 최적화하는 방법"
+        ],
+        [
+          "Chosen/Rejected",
+          "비교 data에서 선호/비선호로 표시된 두 response"
+        ],
+        [
+          "Reference policy",
+          "최적화가 지나치게 멀어지는 것을 제어하는 기준 모델"
+        ]
+      ],
+      "quiz": [
+        [
+          "DPO의 pipeline상 장점은?",
+          "명시적 reward model과 별도 RL loop 없이 preference를 직접 학습할 수 있다."
+        ],
+        [
+          "DPO를 써도 data design이 여전히 중요한 이유는?",
+          "chosen/rejected label 자체가 잘못된 목표를 담으면 모델도 그 잘못된 preference를 학습하기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Harness Behavior",
+      "title": "Schema, Evidence, Abstention을 시스템으로 묶기",
+      "core": [
+        "Post-training은 behavior를 개선하지만 100% 형식/사실 보장을 제공하지 않는다.",
+        "구조화 출력은 schema validator, evidence link, consistency check 같은 외부 harness와 결합해야 한다.",
+        "모르는 경우 abstain하는 behavior는 agent reliability의 핵심이다."
+      ],
+      "easy": "교육을 잘 받은 직원에게도 제출 전 체크리스트와 결재 절차가 필요하다. 모델도 마찬가지다. 잘 하도록 학습하는 것과 실패했을 때 잡아내는 장치는 별개다.",
+      "professor": "Day 3의 결론은 post-training 기법 비교가 아니라 compound system 관점의 전환이다. 모델 behavior를 잘 만들고도 최종 시스템은 validator와 human review를 둔다. 다음 Day 4의 RAG/Tool Use는 이 외부 system이 단순 validator를 넘어 실제 정보를 검색하고 action을 수행하는 방향으로 확장되는 단계다.",
+      "practical": "Knowledge Extraction Harness는 Context Builder → LLM extraction → schema validation → evidence linking → consistency check → human correction → Evaluation Case store로 설계한다. 모델 교체가 있어도 이 harness가 남는 이유가 여기 있다.",
+      "terms": [
+        [
+          "Abstention",
+          "근거/확신이 부족할 때 답을 강행하지 않는 behavior"
+        ],
+        [
+          "Schema validation",
+          "출력이 요구된 field/type/constraint를 만족하는지 검사"
+        ],
+        [
+          "Evidence linking",
+          "생성된 주장과 실제 source record를 연결하는 과정"
+        ]
+      ],
+      "quiz": [
+        [
+          "Post-training과 harness를 함께 써야 하는 이유는?",
+          "확률적 behavior 개선과 deterministic 보증 역할이 다르기 때문이다."
+        ],
+        [
+          "Knowledge Extraction Harness의 durable asset은 무엇인가?",
+          "schema, context assembly, evidence/provenance, validators, human feedback loop 등 모델 외 시스템 자산이다."
+        ]
+      ]
+    }
+  ]
+}

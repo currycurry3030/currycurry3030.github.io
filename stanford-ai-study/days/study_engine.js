@@ -1,18 +1,28 @@
 /* Stanford AI study engine.
  *
- * A day page is a single shell (`dayNN_YYYY-MM-DD.html`) that loads its content
- * from `dayNN_modules.js` (window.STUDY_DAY) and renders it here. PC and mobile
- * share the same file: the layout follows the viewport by default and can be
- * pinned with the header toggle or a `?layout=pc|mobile` query parameter.
+ * A day page is a single responsive shell (`dayNN_YYYY-MM-DD.html`) that names
+ * its day on the script tag (`data-day`); the content is fetched from
+ * `days/data/dayNN.json`. PC and mobile share the same file: the layout follows
+ * the viewport by default and can be pinned with the header toggle or a
+ * `?layout=pc|mobile` query parameter.
+ *
+ * Note: fetch() means a day page must be served over http(s), not opened from
+ * the filesystem. Use `bash tools/run` (or any static server) locally.
  */
-(() => {
-  const D = window.STUDY_DAY;
-  if (!D) {
-    document.body.innerHTML = '<p>Study data load failed.</p>';
+(async () => {
+  const root = document.getElementById('study-app');
+  const dayId = document.currentScript?.dataset.day ?? document.querySelector('[data-day]')?.dataset.day;
+
+  let D;
+  try {
+    const res = await fetch(`data/day${dayId}.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    D = await res.json();
+  } catch (err) {
+    root.innerHTML = `<p>학습 데이터를 불러오지 못했습니다. (${err.message})</p>`;
     return;
   }
 
-  const root = document.getElementById('study-app');
   const esc = (s) =>
     String(s).replace(
       /[&<>"']/g,

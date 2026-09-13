@@ -1,10 +1,28 @@
 # Stanford AI 30-Day Study
 
-Public static learning site for a 30-day Stanford AI curriculum covering CS224N, CS336, CS329Z, and CS329A topics, mapped to a generalized Process Memory / Recipe Advisor architecture.
+Public static learning site for a 30-day Stanford AI curriculum covering CS224N, CS336, CS329Z, and CS329A topics, plus 6 optional extension days, mapped to a generalized Process Memory / Recipe Advisor architecture.
+
+## Structure
+
+```
+stanford-ai-study/
+  index.html                 dashboard; renders day rows from days/data/*.json
+  days/
+    study_engine.css         shared styles (responsive; no per-day CSS)
+    study_engine.js          shared renderer; fetches days/data/dayNN.json
+    dayNN_YYYY-MM-DD.html    one shell per day (PC + mobile in one file)
+    data/dayNN.json          all content for that day
+```
+
+To change a day's content, edit only `days/data/dayNN.json`. To change the
+schedule or a course label, edit the same file — the dashboard reads it, so no
+HTML needs touching. The only reason to edit a shell is a new day.
+
+Because the pages `fetch()` their JSON, a day page must be served over http(s).
+Opening the HTML from the filesystem will show a load error. Use `bash tools/run`
+or any static server.
 
 ## Detailed learning format
-
-Day 5 is the hand-curated reference. Day 1–4 and 6–30 use the shared `days/study_engine.css` + `days/study_engine.js` renderer and one JSON-compatible `dayXX_modules.js` data file per day.
 
 Every mini-lecture module follows the same sequence:
 
@@ -17,9 +35,23 @@ Every mini-lecture module follows the same sequence:
 
 `sourceLabel` uses a numeric slide range only when the range has been verified from the source. Otherwise use a descriptive `Lecture Section`, `Topic`, `Reading`, or `Integration` label.
 
+## Layout
+
+PC and mobile share one file. The layout follows the viewport by default and can
+be pinned with the header toggle (auto → PC → mobile) or a `?layout=pc|mobile`
+query parameter; the choice persists in `stanford-study-layout`.
+
 ## Progress state
 
-Day 1–4 and 6–30 use `stanford-study-dayNN-progress-v3`. PC and mobile variants of the same day share the same key. Day 5 keeps its existing progress key for backward compatibility.
+Module progress is the source of truth, stored per day in
+`stanford-study-dayNN-progress-v3`. The engine derives two keys the dashboard
+reads, so both views always agree:
+
+- `stanford-day-N-summary` — `{done,total}`, shown as a "모듈 3/6" hint
+- `stanford-day-N-done` — `"1"`/`"0"`, mirrored to the dashboard checkbox
+
+Completing every module checks the day off automatically. Checking a day on the
+dashboard is authoritative and clears that day's module state.
 
 ## Architecture used in the learning material
 
@@ -34,10 +66,13 @@ Process Memory is a shared source for both Human Knowledge Transfer and Agent Gr
 Run before publishing:
 
 ```bash
-python tools/validate_stanford_study.py
+python3 tools/validate_stanford_study.py
 ```
 
-The validator checks module schema, quiz/term minimums, source URLs, PC/mobile shells, progress-key uniqueness, stale terminology, and common sensitive-string patterns. GitHub Pages CI runs it before htmlproofer.
+The validator checks the module schema, quiz/term minimums, source URLs, shell
+wiring, schedule sanity (unique, ordered, weekday-only dates), progress-key
+uniqueness, orphan files, stale terminology, and common sensitive-string
+patterns. Both GitHub workflows run it.
 
 ## Public-content constraints
 

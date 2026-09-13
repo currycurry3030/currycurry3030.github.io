@@ -1,0 +1,204 @@
+{
+  "day": 29,
+  "date": "2026-10-22",
+  "course": "CS329A",
+  "courseLabel": "CS329A · Spring 2027",
+  "title": "Long-horizon Evaluation",
+  "subtitle": "긴 agent task를 최종 성공률뿐 아니라 failure taxonomy, time/cost, memory pollution까지 포함해 평가한다.",
+  "systemPosition": "Cross-loop · Long-horizon Eval",
+  "systemMapping": "Context 확보부터 evidence-grounded Top-k와 engineer-review package까지 전체 chain의 실패 지점을 추적한다.",
+  "progressKey": "stanford-study-day29-progress-v3",
+  "file": "day29_2026-10-22.html",
+  "sourceLinks": [
+    {
+      "label": "CS329A Long-Horizon Eval",
+      "url": "https://cs329a.stanford.edu/"
+    },
+    {
+      "label": "Measuring Long Tasks",
+      "url": "https://arxiv.org/abs/2503.14499"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · Why Long Horizon",
+      "title": "긴 Task는 오류가 누적된다",
+      "core": [
+        "Step 수가 늘수록 작은 failure가 전체 성공을 막을 가능성이 커진다.",
+        "Partial success와 final success를 구분해야 한다.",
+        "Time/cost budget도 task success의 일부다."
+      ],
+      "easy": "10단계 작업에서 각 단계가 95% 성공해도 전체 성공률은 훨씬 낮아질 수 있다.",
+      "professor": "Long-horizon eval은 single-turn benchmark에서 보이지 않는 compounding error를 측정한다.",
+      "practical": "Recipe Advisor 전체 flow에서 retrieval 98%, prediction 95%, verifier 98%여도 조합 성공률은 더 낮아질 수 있다. E2E pass와 stage pass를 같이 본다.",
+      "terms": [
+        [
+          "Compounding error",
+          "여러 단계의 작은 오류가 누적되어 전체 실패를 만드는 현상"
+        ],
+        [
+          "Partial success",
+          "일부 단계는 성공했지만 최종 목표는 못 이룬 상태"
+        ],
+        [
+          "Long-horizon task",
+          "여러 상호작용/단계가 이어지는 긴 작업"
+        ]
+      ],
+      "quiz": [
+        [
+          "단계별 95%가 전체 95%를 의미하지 않는 이유는?",
+          "여러 단계 성공이 동시에 필요해 확률이 누적되기 때문이다."
+        ],
+        [
+          "Long-horizon eval에서 stage metric이 필요한 이유는?",
+          "최종 failure의 원인을 특정 단계로 attribution하기 위해서다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Success Contract",
+      "title": "E2E Success를 먼저 정의",
+      "core": [
+        "“답변 생성”보다 실제 user goal completion을 success로 정의한다.",
+        "Constraint/evidence/reviewability 같은 non-functional 조건을 포함한다.",
+        "Stopping condition도 benchmark contract에 포함한다."
+      ],
+      "easy": "보고서 파일이 만들어졌다고 업무가 끝난 것이 아니라 엔지니어가 실제로 판단할 수 있어야 성공인 것과 같다.",
+      "professor": "Long task benchmark는 request/environment/stopping/scorer contract가 더 중요하다.",
+      "practical": "E2E success: current context 충분, applicable cases retrieved, safe candidates, uncertainty displayed, evidence traceable, no guardrail violation, engineer-reviewable output. 하나라도 critical fail이면 full pass 아님.",
+      "terms": [
+        [
+          "Success contract",
+          "task 완료로 인정하기 위한 명시적 조건 집합"
+        ],
+        [
+          "Non-functional requirement",
+          "정확도 외 latency/safety/traceability 같은 요구"
+        ],
+        [
+          "Critical failure",
+          "발생하면 전체 성공을 무효화하는 중대한 오류"
+        ]
+      ],
+      "quiz": [
+        [
+          "Recipe Advisor에서 output text가 생성돼도 실패인 경우는?",
+          "constraint 위반이나 근거 없는 candidate가 포함된 경우다."
+        ],
+        [
+          "Stopping criteria가 eval contract에 필요한 이유는?",
+          "끝없이 tool을 호출해 결국 맞히는 behavior를 정상으로 평가하면 안 되기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Failure Taxonomy",
+      "title": "Failure를 계층별로 분류하기",
+      "core": [
+        "Context, retrieval, query, prediction, safety, grounding, human-interface failure를 분리한다.",
+        "한 task에 여러 failure가 있을 수 있어 primary/secondary cause를 기록한다.",
+        "Taxonomy가 개선 backlog 우선순위를 만든다."
+      ],
+      "easy": "“틀렸다” 한 줄 대신 어디서부터 틀렸는지 사건 보고서를 만드는 것이다.",
+      "professor": "Long-horizon agent의 가장 가치 있는 산출물 중 하나가 error analysis다. 점수 하나보다 failure distribution이 roadmap을 알려준다.",
+      "practical": "Taxonomy: context omission, wrong-case retrieval, DB truncation, Δmetric bias, constraint miss, unsupported rationale, review UI ambiguity, no-progress loop, stale memory. 주간/월간 Pareto를 본다.",
+      "terms": [
+        [
+          "Failure taxonomy",
+          "실패를 일관된 category로 분류한 체계"
+        ],
+        [
+          "Primary cause",
+          "전체 실패를 시작시킨 가장 직접적인 원인"
+        ],
+        [
+          "Pareto analysis",
+          "빈도/영향이 큰 소수 failure를 우선 찾는 분석"
+        ]
+      ],
+      "quiz": [
+        [
+          "Failure taxonomy가 roadmap에 도움이 되는 이유는?",
+          "가장 자주/크게 발생하는 문제 component를 객관적으로 우선할 수 있기 때문이다."
+        ],
+        [
+          "한 task에 primary/secondary를 나누는 이유는?",
+          "첫 오류와 그 뒤 파생 오류를 구분하기 위해서다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Memory Pollution",
+      "title": "Long-running Agent와 Memory Pollution",
+      "core": [
+        "잘못된 agent output을 memory에 자동 저장하면 오류가 미래 task에 전파된다.",
+        "Write-to-memory는 read보다 높은 검증 gate가 필요하다.",
+        "Memory corruption을 찾는 audit와 rollback policy가 필요하다."
+      ],
+      "easy": "한 번 잘못 적은 매뉴얼을 다음 직원들이 계속 참고하면 오류가 조직 전체로 퍼지는 것과 같다.",
+      "professor": "Long-horizon system에서는 현재 task failure뿐 아니라 미래 state에 남기는 side effect를 평가해야 한다.",
+      "practical": "Evaluation Case store에 agent draft를 바로 commit하지 않는다. source/evidence validation + human review를 거쳐 validated status가 된 case만 grounding 기본 corpus에 포함한다.",
+      "terms": [
+        [
+          "Memory pollution",
+          "잘못된 정보가 persistent memory에 저장되어 이후 판단을 오염시키는 현상"
+        ],
+        [
+          "Write gate",
+          "persistent memory 저장 전에 통과해야 하는 검증"
+        ],
+        [
+          "Rollback",
+          "오염된 memory/version을 이전 상태로 되돌리는 것"
+        ]
+      ],
+      "quiz": [
+        [
+          "Memory write를 read보다 엄격히 보는 이유는?",
+          "한 번 저장된 오류가 미래 여러 request에 반복 영향을 줄 수 있기 때문이다."
+        ],
+        [
+          "Draft case를 grounding corpus에서 제외하는 이유는?",
+          "검증 전 오류가 다른 recommendation의 근거가 되는 것을 막기 위해서다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Time & Cost",
+      "title": "시간·비용도 Long-horizon Metric",
+      "core": [
+        "Task success가 높아도 너무 느리거나 비싸면 production value가 낮다.",
+        "Tool count, DB scan, tokens, wall-clock을 함께 측정한다.",
+        "Budget 초과 종료를 failure/abstain category로 명시한다."
+      ],
+      "easy": "한 일을 정확히 끝내도 3시간 걸릴 일을 3일 걸리면 업무 시스템으로는 문제가 된다.",
+      "professor": "Agent evaluation은 capability와 efficiency를 함께 본다. 특히 test-time scaling은 성능과 비용 trade-off를 만든다.",
+      "practical": "Metric dashboard: success, critical failure, median/p95 latency, LLM tokens, DB scanned bytes, tool calls, human review time. 최적화는 success-per-cost 관점으로 본다.",
+      "terms": [
+        [
+          "Wall-clock time",
+          "실제 사용자 관점에서 작업이 끝날 때까지 걸린 시간"
+        ],
+        [
+          "p95 latency",
+          "느린 상위 5% 요청 경계를 보는 지표"
+        ],
+        [
+          "Success-per-cost",
+          "비용 대비 성공/품질 효율"
+        ]
+      ],
+      "quiz": [
+        [
+          "Agent eval에 p95가 중요한 이유는?",
+          "평균이 가리는 매우 느린 tail request를 확인하기 위해서다."
+        ],
+        [
+          "Test-time compute와 cost metric이 같이 필요한 이유는?",
+          "성능 향상이 과도한 compute 증가로 얻어진 것인지 판단하기 위해서다."
+        ]
+      ]
+    }
+  ]
+}

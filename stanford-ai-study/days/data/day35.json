@@ -1,0 +1,164 @@
+{
+  "day": 35,
+  "date": "2026-10-30",
+  "course": "CS25 · Spring 2026",
+  "courseLabel": "CS25 · Spring 2026",
+  "title": "Transformers United · Research Frontiers",
+  "subtitle": "Spring 2026 세미나의 핵심 흐름을 architecture, scaling, context learning, collaborative agents 관점으로 압축한다.",
+  "systemPosition": "Extension · Transformer Research Frontiers",
+  "systemMapping": "기초 Transformer 복습이 아니라 최근 연구가 architecture, scaling, retrieval/context, multimodal·agent system으로 어떻게 확장되는지 보는 날이다.",
+  "progressKey": "stanford-study-day35-progress-v3",
+  "file": "day35_2026-10-30.html",
+  "sourceLinks": [
+    {
+      "label": "CS25 Spring 2026",
+      "url": "https://web.stanford.edu/class/cs25/"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Spring 2026 Talk · SSM vs Transformer",
+      "title": "Sequence Model Architecture Trade-offs",
+      "core": [
+        "Transformer의 attention은 강력하지만 긴 sequence에서 계산·메모리 비용이 커진다.",
+        "State Space Model 계열은 subquadratic sequence modeling을 목표로 하며 다른 compute 특성을 가진다.",
+        "어떤 architecture가 좋은지는 data resolution과 tokenization에도 의존한다."
+      ],
+      "easy": "모든 사람끼리 서로 대화하게 만드는 attention은 표현력이 높지만 사람이 많아질수록 대화 연결 수가 급증한다. SSM은 정보를 더 압축된 상태로 전달해 긴 sequence를 효율적으로 다루려는 다른 설계다.",
+      "professor": "CS25 Spring 2026의 SSM 세션은 'Transformer를 대체하는 단일 승자'보다 workload와 tokenization에 따라 architecture trade-off가 달라진다는 점을 강조한다. tokenizer-free 모델까지 논의되는 이유도 representation 단위가 compute와 성능을 함께 결정하기 때문이다.",
+      "practical": "긴 공정 이력이나 high-frequency sensor를 LLM token으로 그대로 변환하는 것은 비효율적일 수 있다. 시계열 encoder, event compression, retrieval로 필요한 구간만 전달하는 hybrid architecture를 먼저 검토한다.",
+      "terms": [
+        [
+          "State Space Model",
+          "상태 업데이트를 이용해 sequence를 처리하는 모델 계열"
+        ],
+        [
+          "Subquadratic",
+          "Sequence 길이에 대해 제곱보다 느리게 증가하는 계산 복잡도"
+        ],
+        [
+          "Tokenization",
+          "Raw input을 모델이 처리할 단위로 나누고 표현하는 과정"
+        ]
+      ],
+      "quiz": [
+        [
+          "긴 sequence에서 Transformer attention의 대표적 부담은?",
+          "Token 수가 늘수록 pairwise attention 계산과 memory가 크게 증가한다."
+        ],
+        [
+          "Architecture 비교에서 tokenization을 함께 봐야 하는 이유는?",
+          "같은 원시 데이터도 token 단위에 따라 sequence 길이와 정보 밀도, compute 특성이 달라지기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Spring 2026 Talk · Ultra-Scale Training",
+      "title": "Thousands of GPUs와 Parallelism",
+      "core": [
+        "대규모 training은 data/model/tensor/pipeline/expert parallelism을 조합해 GPU에 작업을 나눈다.",
+        "통신량과 synchronization이 GPU 수를 늘릴 때 주요 병목이 된다.",
+        "Mixture-of-Experts는 parameter scale을 키우지만 routing과 load balancing 문제가 추가된다."
+      ],
+      "easy": "책 한 권을 여러 사람이 나눠 쓰면 빨라질 것 같지만, 서로 결과를 계속 맞춰야 하면 회의 시간이 커진다. GPU parallelism도 계산 분담과 통신 비용의 균형 문제다.",
+      "professor": "CS25의 ultra-scale 세션은 5D parallelism, MoE, communication pattern, throughput tuning처럼 실제 대규모 학습의 시스템 현실을 다룬다. FLOPs만 계산해서는 wall-clock 성능을 설명할 수 없다는 메시지가 중요하다.",
+      "practical": "사내 모델을 직접 pretrain하지 않더라도 serving과 batch inference에서 동일한 원리가 나타난다. GPU utilization, batch size, KV cache, interconnect 병목을 분리해서 측정하고 모델 규모만으로 latency를 추정하지 않는다.",
+      "terms": [
+        [
+          "Parallelism",
+          "Model 계산을 여러 device에 나누는 전략"
+        ],
+        [
+          "Communication overhead",
+          "Device 사이 tensor/gradient 교환에 드는 비용"
+        ],
+        [
+          "Mixture-of-Experts",
+          "입력별로 일부 expert network만 활성화하는 sparse architecture"
+        ]
+      ],
+      "quiz": [
+        [
+          "GPU 수를 2배 늘려도 속도가 2배 안 되는 이유는?",
+          "통신·동기화·load imbalance 같은 overhead가 함께 증가하기 때문이다."
+        ],
+        [
+          "MoE가 dense model과 다른 시스템 문제를 만드는 예는?",
+          "Token routing과 expert load balancing, all-to-all communication이 필요하다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Spring 2026 Talk · Parameters vs Context",
+      "title": "Memorize, Retrieve, Learn in Context",
+      "core": [
+        "모델은 정보를 parameter update와 in-context input이라는 서로 다른 경로로 배울 수 있다.",
+        "Context에서 제공된 정보는 최신성·provenance 관리에 유리하지만 context window와 retrieval 품질에 의존한다.",
+        "RAG는 모든 지식을 parameter에 암기시키지 않고 필요한 evidence를 검색해 제공하는 설계다."
+      ],
+      "easy": "모든 내용을 머릿속에 외우는 것과 시험 때 참고서를 잘 찾아보는 것은 다른 능력이다. 모델도 parameter memory와 context retrieval을 다르게 활용한다.",
+      "professor": "Spring 2026 세션은 parameter로 학습한 정보와 context로 제공한 정보의 generalization mode가 다를 수 있음을 다룬다. Data augmentation, retrieval, RL을 이용해 이 간극을 줄이는 방향이 제시된다.",
+      "practical": "공정 지식은 변경 가능하고 근거 추적이 중요하므로 Process Memory에 case/evidence를 저장하고 retrieval하는 편이 parameter fine-tuning보다 관리하기 쉬운 부분이 많다. Stable policy/format은 model/harness에, mutable facts는 retrieval layer에 두는 분리가 유용하다.",
+      "terms": [
+        [
+          "Parametric memory",
+          "Model parameter에 학습 과정으로 내재된 정보"
+        ],
+        [
+          "In-context learning",
+          "Parameter update 없이 prompt/context 예시를 이용해 task를 수행하는 능력"
+        ],
+        [
+          "Retrieval",
+          "외부 저장소에서 현재 질문과 관련된 정보를 찾아 context에 공급하는 과정"
+        ]
+      ],
+      "quiz": [
+        [
+          "변경이 잦고 출처 추적이 필요한 지식을 retrieval에 두기 좋은 이유는?",
+          "원문 갱신과 provenance 관리가 쉽고 model 재학습 없이 최신 context를 제공할 수 있기 때문이다."
+        ],
+        [
+          "RAG가 자동으로 사실성을 보장하지 않는 이유는?",
+          "잘못된 검색, 잘못된 source, context misinterpretation이 여전히 가능하기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Spring 2026 Talks · Collaborative AI & Serving",
+      "title": "Agent System과 Production Inference",
+      "core": [
+        "최근 AI는 단일 응답 모델에서 hypothesis generation, refinement, tool use를 포함한 collaborative agent system으로 확장되고 있다.",
+        "Production inference에서는 latency, throughput, reliability, cost가 model quality만큼 중요하다.",
+        "Multimodal/agent workload는 context와 tool 결과가 길어져 serving design이 더 복잡해진다."
+      ],
+      "easy": "똑똑한 한 명에게 모든 일을 맡기는 것보다 여러 역할과 도구를 가진 팀을 운영하면 복잡한 일을 더 잘할 수 있다. 하지만 팀이 커지면 회의 비용과 실패 지점도 늘어난다.",
+      "professor": "CS25 2026 후반은 collaborative AI agents, native multimodal intelligence, transformer serving을 이어서 다룬다. 연구 아이디어가 실제 application이 되려면 inference system과 human workflow까지 설계해야 한다는 흐름이다.",
+      "practical": "Recipe Advisor도 candidate generator, predictor, constraint checker, verifier를 역할로 나눌 수 있지만 agent 수를 늘리는 것 자체가 목표는 아니다. 각 component가 명확한 contract와 eval을 가질 때만 분리가 이득이다.",
+      "terms": [
+        [
+          "Collaborative agent",
+          "여러 역할·도구·검증 단계가 협력하는 AI 시스템"
+        ],
+        [
+          "Throughput",
+          "단위 시간에 처리 가능한 요청 또는 token 양"
+        ],
+        [
+          "Latency",
+          "한 요청이 완료되기까지 걸리는 시간"
+        ]
+      ],
+      "quiz": [
+        [
+          "Agent를 여러 개로 나누면 항상 좋아지는가?",
+          "아니다. Coordination overhead와 failure point가 늘므로 역할·contract·eval이 명확할 때만 이득이 있다."
+        ],
+        [
+          "Production inference에서 accuracy 외에 봐야 할 핵심 지표는?",
+          "Latency, throughput, cost, reliability, memory 사용량 등을 함께 봐야 한다."
+        ]
+      ]
+    }
+  ]
+}

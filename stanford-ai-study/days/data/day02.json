@@ -1,0 +1,204 @@
+{
+  "day": 2,
+  "date": "2026-09-15",
+  "course": "CS224N",
+  "courseLabel": "CS224N",
+  "title": "Pretraining",
+  "subtitle": "대규모 언어모델이 어떤 objective와 data에서 일반 능력을 획득하는지, 그리고 weight 지식과 retrieval grounding을 구분한다.",
+  "systemPosition": "Foundation · LLM Backbone / Context",
+  "systemMapping": "도메인 지식을 모델 weight에 넣는 것과 최신·근거 가능한 Process Memory를 retrieval하는 것은 서로 다른 문제다.",
+  "progressKey": "stanford-study-day02-progress-v3",
+  "file": "day02_2026-09-15.html",
+  "sourceLinks": [
+    {
+      "label": "2026 Pretraining 슬라이드",
+      "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf"
+    },
+    {
+      "label": "CS224N 공식 일정",
+      "url": "https://web.stanford.edu/class/cs224n/"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · Objective",
+      "title": "Pretraining Objective와 Next-Token Prediction",
+      "core": [
+        "Pretraining은 방대한 unlabeled text에서 일반적인 언어/지식 패턴을 학습하는 단계다.",
+        "Autoregressive LM은 이전 token을 조건으로 다음 token의 log-likelihood를 최대화한다.",
+        "단순한 local objective라도 scale과 data를 통해 다양한 downstream capability가 나타날 수 있다."
+      ],
+      "easy": "모델은 처음부터 요약, 코딩, 질문응답이라는 버튼을 따로 배우지 않는다. 매우 많은 문장에서 다음에 올 token을 맞히는 연습을 반복하면서 언어 구조와 세계 지식의 통계적 패턴을 내부 representation에 압축한다.",
+      "professor": "Transformer architecture를 배운 직후 objective를 보는 이유는 좋은 회로만 있으면 지능이 생기는가라는 질문에 답하기 위해서다. Architecture는 학습 가능한 공간을 제공할 뿐이고, 어떤 예제를 어떤 loss로 얼마나 보느냐가 실제 capability를 만든다. 이후 data mixture와 scaling을 보는 이유도 동일하다.",
+      "practical": "Process Knowledge를 모두 pretraining weight에 넣겠다는 접근은 업데이트와 provenance 측면에서 약하다. Recipe/Metrology/FDC처럼 시점·조건·근거가 중요한 정보는 retrieval과 structured memory가 적합하고, pretraining은 일반적인 언어 이해와 reasoning prior를 제공하는 역할로 보는 편이 현실적이다.",
+      "terms": [
+        [
+          "Pretraining",
+          "대규모 일반 data로 범용 representation을 학습하는 단계"
+        ],
+        [
+          "Next-token prediction",
+          "이전 token을 바탕으로 다음 token 확률을 예측하는 objective"
+        ],
+        [
+          "Log-likelihood",
+          "관측된 token sequence에 높은 확률을 주도록 학습하는 기준"
+        ]
+      ],
+      "quiz": [
+        [
+          "Next-token prediction이 task-specific label 없이 가능한 이유는?",
+          "텍스트 자체에서 다음 token이 supervision으로 제공되기 때문이다."
+        ],
+        [
+          "Process Memory를 전부 model weight에 넣기 어려운 이유 두 가지는?",
+          "업데이트가 느리고 특정 주장에 대한 provenance를 추적하기 어렵기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Data",
+      "title": "Data Mixture, Quality와 Deduplication",
+      "core": [
+        "Pretraining 성능은 token 수뿐 아니라 어떤 source를 어떤 비율로 섞는지에 크게 좌우된다.",
+        "중복·저품질·오염 data는 compute를 낭비하고 memorization을 키울 수 있다.",
+        "Data quality는 model architecture와 독립적인 핵심 설계 변수다."
+      ],
+      "easy": "같은 공부 시간을 써도 교과서, 광고문, 중복 복사본을 어떤 비율로 읽느냐에 따라 배운 내용이 달라진다. LLM도 데이터 양만이 아니라 어떤 문서를 얼마나 반복해 보는지가 중요하다.",
+      "professor": "교수 설명의 포인트는 scale을 말하면서도 more data = always better라는 단순 결론을 피하는 데 있다. Web data는 넓지만 noisy하고, curated data는 고품질이지만 좁을 수 있다. 이후 scaling law를 해석할 때도 data quality가 바뀌면 단순 token count 비교가 깨질 수 있다.",
+      "practical": "사내 Evaluation Case도 동일하다. 같은 평가를 여러 문서가 복제했다고 해서 evidence가 3배 강해지는 것이 아니다. Process Memory 구축 시 중복 case, copy-paste conclusion, 잘못된 metadata를 정리해야 retrieval이 특정 패턴에 과도하게 치우치지 않는다.",
+      "terms": [
+        [
+          "Data mixture",
+          "서로 다른 source를 어떤 비율로 학습에 포함할지 정한 구성"
+        ],
+        [
+          "Deduplication",
+          "중복/근접 중복 문서를 제거하는 과정"
+        ],
+        [
+          "Data contamination",
+          "평가나 정답 data가 학습 data에 섞여 성능을 부풀리는 현상"
+        ]
+      ],
+      "quiz": [
+        [
+          "Data mixture가 중요한 이유는?",
+          "동일 token 수에서도 source 비율에 따라 학습되는 capability와 bias가 달라지기 때문이다."
+        ],
+        [
+          "Process Memory에서 dedup이 필요한 이유는?",
+          "복제된 case가 retrieval/통계에서 과도한 증거처럼 작동하는 것을 막기 위해서다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Scaling",
+      "title": "Scaling: Model, Data, Compute",
+      "core": [
+        "성능은 model size, data size, training compute의 함수로 함께 움직인다.",
+        "Scale trend는 자원 배분에 도움을 주지만 개별 capability의 출현 시점을 정확히 보장하지 않는다.",
+        "동일한 compute에서 model/data balance가 비효율적이면 성능을 손해볼 수 있다."
+      ],
+      "easy": "큰 엔진만 달거나, 연료만 많이 넣거나, 운행 시간만 늘리는 것 중 하나만으로는 최적이 아니다. model parameter, data, compute는 함께 맞춰야 한다.",
+      "professor": "Scaling을 배우는 목적은 무조건 큰 모델이 답이라고 결론내리기 위해서가 아니다. 예측 가능한 trend가 있는 영역과 특정 benchmark/capability에서 갑자기 보이는 비선형 현상을 구분하는 것이 중요하다. 이 관점은 나중에 test-time compute와 system-level scaling을 볼 때 다시 사용된다.",
+      "practical": "Recipe Advisor에서 모델을 더 강한 등급으로 바꾼다고 semantic layer나 Process Memory 문제가 자동 해결되지는 않는다. base model scale은 한 축이고, retrieval precision, tool safety, verifier quality 같은 system scale이 별도의 축이다. 병목을 계층별로 측정해야 한다.",
+      "terms": [
+        [
+          "Scaling law",
+          "규모와 loss/성능 사이의 경험적 규칙"
+        ],
+        [
+          "Compute-optimal",
+          "제한된 compute에서 model/data 배분을 효율적으로 선택하는 것"
+        ],
+        [
+          "Capability",
+          "특정 과제를 수행하는 모델의 기능/능력"
+        ]
+      ],
+      "quiz": [
+        [
+          "Scaling law를 모델 선택에 쓸 때 주의할 점은?",
+          "평균 loss trend가 특정 agent workflow의 reliability를 직접 보장하지 않는다는 점이다."
+        ],
+        [
+          "강한 base model로도 Recipe Advisor가 실패할 수 있는 system 원인은?",
+          "retrieval, tool query, constraint verifier, context assembly 등이 병목일 수 있다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Adaptation",
+      "title": "Domain Adaptation vs Retrieval Grounding",
+      "core": [
+        "모델 weight를 바꾸는 adaptation과 inference 때 context를 제공하는 retrieval은 서로 다른 trade-off를 가진다.",
+        "반복적이고 넓게 쓰이는 domain style/behavior는 adaptation 후보가 될 수 있다.",
+        "자주 바뀌고 provenance가 중요한 facts는 retrieval이 유리하다."
+      ],
+      "easy": "직원에게 회사 업무 방식을 오래 교육하는 것과 최신 매뉴얼을 필요할 때 찾아보게 하는 것은 다르다. 전자는 weight adaptation에, 후자는 retrieval에 가깝다. 둘을 같이 쓸 수도 있지만 문제 성격을 먼저 구분해야 한다.",
+      "professor": "Pretraining에서 domain knowledge 이야기가 나오면 자연스럽게 우리 data로 다시 학습하면 되나라는 질문이 생긴다. 좋은 답은 비용, freshness, privacy, verifiability를 따져 선택하는 것이다. 다음 post-training 강의는 facts보다 어떻게 답하게 만들 것인가에 더 초점을 둔다.",
+      "practical": "공정 용어와 출력 schema를 잘 따르는 behavior는 SFT/post-training으로 개선할 수 있지만, 특정 평가의 최신 결과나 과거 DOE evidence는 Process Memory에서 가져오는 편이 낫다. 즉 model은 읽고 판단하는 능력, memory는 최신 근거를 공급하는 역할로 분리한다.",
+      "terms": [
+        [
+          "Domain adaptation",
+          "특정 domain data로 모델 분포/behavior를 조정하는 과정"
+        ],
+        [
+          "Grounding",
+          "외부 근거에 답변을 연결하는 것"
+        ],
+        [
+          "Freshness",
+          "정보가 현재 시점과 얼마나 맞는지 나타내는 성질"
+        ]
+      ],
+      "quiz": [
+        [
+          "Weight adaptation과 retrieval을 나누는 핵심 질문은?",
+          "정보가 얼마나 자주 바뀌고 provenance가 필요한지다."
+        ],
+        [
+          "공정 평가의 최신 결과를 retrieval에 두는 이유는?",
+          "업데이트가 빠르고 원천 evidence를 추적할 수 있기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Limits",
+      "title": "Pretraining의 한계: Freshness, Provenance, Control",
+      "core": [
+        "Pretraining knowledge는 학습 cutoff 이후 사실을 자동으로 알 수 없다.",
+        "모델이 어떤 문서에서 지식을 얻었는지 정확한 provenance를 제공하기 어렵다.",
+        "다음 token objective는 사용자가 원하는 schema·안전·abstention behavior를 직접 최적화하지 않는다."
+      ],
+      "easy": "많이 공부한 사람도 언제 어떤 책에서 들은 사실인지 정확히 기억하지 못할 수 있고, 최신 회사 정책은 모를 수 있다. 또한 모르는 문제는 모른다고 말하라 같은 업무 규칙은 별도 훈련이 필요하다.",
+      "professor": "이 모듈이 Day 3 Post-training으로 넘어가는 다리다. Pretraining으로 범용 능력을 얻었지만, 실제 assistant가 되려면 instruction following, preference, safety, format control이 필요하다. 그리고 외부 최신 facts에는 RAG/tool use가 필요하다. 따라서 이후 강의들은 pretraining 위에 쌓이는 여러 control layer를 다룬다.",
+      "practical": "Evaluation Case Generator가 source 없이 그럴듯한 결론을 만드는 것을 막으려면 base model 지식만 믿어서는 안 된다. evidence field, schema validator, abstention rule, retrieval provenance를 harness 수준에서 강제해야 한다.",
+      "terms": [
+        [
+          "Knowledge cutoff",
+          "모델이 학습에서 본 정보의 시간적 한계"
+        ],
+        [
+          "Provenance",
+          "정보/주장이 어느 source에서 왔는지 추적하는 정보"
+        ],
+        [
+          "Instruction following",
+          "사용자 지시와 형식 요구를 따르는 능력"
+        ]
+      ],
+      "quiz": [
+        [
+          "Pretraining만으로 최신 사내 fact를 안전하게 답하기 어려운 이유는?",
+          "cutoff와 provenance 한계가 있기 때문이다."
+        ],
+        [
+          "Day 3 Post-training이 필요한 이유는?",
+          "범용 LM을 사용자가 원하는 instruction/behavior에 맞추기 위해서다."
+        ]
+      ]
+    }
+  ]
+}

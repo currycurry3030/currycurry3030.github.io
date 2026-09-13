@@ -1,0 +1,204 @@
+{
+  "day": 24,
+  "date": "2026-10-15",
+  "course": "CS329A",
+  "courseLabel": "CS329A · Spring 2027",
+  "title": "Multi-step Reasoning & Planning",
+  "subtitle": "복잡한 task를 dependency-aware plan으로 나누고 observation에 따라 re-plan하는 법을 이해한다.",
+  "systemPosition": "Loop 2 · Planner / Context Plan",
+  "systemMapping": "필요 context 수집 → case retrieval → candidate → prediction → verify → engineer package를 dependency 순서로 실행한다.",
+  "progressKey": "stanford-study-day24-progress-v3",
+  "file": "day24_2026-10-15.html",
+  "sourceLinks": [
+    {
+      "label": "CS329A Planning",
+      "url": "https://cs329a.stanford.edu/"
+    },
+    {
+      "label": "SWiRL",
+      "url": "https://arxiv.org/abs/2504.04736"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · Decomposition",
+      "title": "복잡한 Goal을 Subgoal로 나누기",
+      "core": [
+        "Subgoal은 독립적인 success condition을 가져야 한다.",
+        "필요 data/tool dependency를 명시한다.",
+        "너무 세분화하면 coordination cost가 커진다."
+      ],
+      "easy": "“좋은 DOE를 만들어라”를 자료수집, 과거사례, 후보생성, 예측, 안전검사로 나누는 식이다.",
+      "professor": "Planning 강의는 자연어 plan의 길이보다 실행 가능한 dependency graph가 중요한 것을 보여준다.",
+      "practical": "Recipe Decision plan을 fixed stage로 정의하되, request에 따라 불필요 stage는 생략한다. 각 stage의 required input과 output schema를 명확히 한다.",
+      "terms": [
+        [
+          "Subgoal",
+          "전체 목표를 이루는 독립 하위 목표"
+        ],
+        [
+          "Dependency",
+          "한 단계가 실행되기 위해 필요한 선행 결과"
+        ],
+        [
+          "Success condition",
+          "단계가 완료되었다고 판단하는 기준"
+        ]
+      ],
+      "quiz": [
+        [
+          "좋은 subgoal의 특징은?",
+          "입력/출력과 완료 기준이 명확하다."
+        ],
+        [
+          "계획을 너무 잘게 나누면?",
+          "tool/LLM call과 coordination overhead가 커진다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Plan vs Execute",
+      "title": "계획과 실행을 분리하되 고정하지 않기",
+      "core": [
+        "Initial plan은 필요한 정보가 부족해 틀릴 수 있다.",
+        "Execution observation으로 plan을 수정한다.",
+        "Plan 자체도 budget/constraint를 포함해야 한다."
+      ],
+      "easy": "여행 전에 경로를 짜지만 도로가 막히면 우회하는 것과 같다.",
+      "professor": "Plan-and-execute pattern은 reasoning과 action control을 분리하지만, re-planning 없는 rigid plan은 환경 변화에 약하다.",
+      "practical": "Case retrieval 결과가 0이면 filter를 넓히는 re-plan, OOD가 높으면 후보 생성 대신 “새 DOE 필요” package로 전환하는 plan branch를 둔다.",
+      "terms": [
+        [
+          "Plan-and-execute",
+          "먼저 계획을 세우고 단계별로 실행하는 agent pattern"
+        ],
+        [
+          "Re-plan",
+          "새 observation에 따라 계획을 수정하는 것"
+        ],
+        [
+          "Contingency",
+          "특정 failure/상태에서 사용할 대안 경로"
+        ]
+      ],
+      "quiz": [
+        [
+          "Rigid plan의 문제는?",
+          "중간 observation이 예상과 다를 때 잘못된 단계를 계속 실행할 수 있다."
+        ],
+        [
+          "Retrieval 0건일 때 re-plan 예는?",
+          "hard filter를 단계적으로 완화하거나 human에 context 부족을 알리는 것이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Dependency Graph",
+      "title": "순차·병렬 실행 판단",
+      "core": [
+        "Dependency가 없는 context query는 병렬 실행할 수 있다.",
+        "Candidate 생성→prediction→constraint처럼 선행 결과가 필요한 chain은 순차다.",
+        "Critical path를 줄이되 shared resource budget을 지킨다."
+      ],
+      "easy": "동시에 가능한 일과 먼저 끝나야 다음 일을 할 수 있는 일을 구분하는 것이다.",
+      "professor": "Planning은 곧 scheduling 문제이기도 하다. LLM이 모든 순서를 text로 판단하기보다 graph/state machine에 dependency를 encode할 수 있다.",
+      "practical": "Incoming/FDC summary query를 병렬화하되 ClickHouse concurrency를 제한한다. Candidate별 prediction/constraint는 vectorized batch로 실행해 N번 tool round-trip을 줄인다.",
+      "terms": [
+        [
+          "Critical path",
+          "전체 완료 시간을 결정하는 가장 긴 dependency 경로"
+        ],
+        [
+          "Parallelizable",
+          "선행 dependency 없이 동시에 실행 가능한 작업"
+        ],
+        [
+          "Batch execution",
+          "여러 입력을 한 번의 tool/model call로 묶어 처리하는 방식"
+        ]
+      ],
+      "quiz": [
+        [
+          "Candidate별 prediction을 batch로 묶는 장점은?",
+          "tool round-trip과 model invocation overhead를 줄일 수 있다."
+        ],
+        [
+          "병렬 query에 여전히 limit가 필요한 이유는?",
+          "DB connection/CPU/IO 자원을 동시에 과소모할 수 있기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Stop & Replan",
+      "title": "Stop Condition과 Escalation",
+      "core": [
+        "Plan은 성공뿐 아니라 실패/불확실 terminal state를 정의해야 한다.",
+        "반복 no-progress를 감지하고 escalation한다.",
+        "Human escalation에 필요한 context를 요약해 전달한다."
+      ],
+      "easy": "답이 없을 때 계속 같은 검색을 반복하기보다 “여기까지 확인했고 이 정보가 부족하다”고 사람에게 넘기는 것이다.",
+      "professor": "Planning quality는 성공 경로만큼 failure path에서 드러난다. Production agent는 bounded behavior가 중요하다.",
+      "practical": "Escalation package: current context, tried tools, retrieved cases, why insufficient, uncertainty/OOD, recommended next data/evaluation. Engineer가 바로 다음 행동을 선택할 수 있게 한다.",
+      "terms": [
+        [
+          "Escalation",
+          "자동 처리가 어려운 상태를 상위/사람 검토로 넘기는 것"
+        ],
+        [
+          "No-progress",
+          "반복 실행에도 새 유효 정보가 늘지 않는 상태"
+        ],
+        [
+          "Failure package",
+          "실패 이유와 시도/부족 정보가 정리된 전달 묶음"
+        ]
+      ],
+      "quiz": [
+        [
+          "Agent가 실패 시 남겨야 할 것은?",
+          "무엇을 시도했고 어떤 정보가 부족하며 다음 행동이 무엇인지다."
+        ],
+        [
+          "No-progress 감지 후 행동은?",
+          "반복을 멈추고 re-plan 또는 human escalation한다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Engineer Package",
+      "title": "계획의 최종 산출물을 사용자 행동에 맞추기",
+      "core": [
+        "Agent 내부 step 수보다 engineer가 검토할 output contract가 중요하다.",
+        "Top-k candidate를 비교 가능한 표준 schema로 제공한다.",
+        "Next action과 required evidence를 명확히 한다."
+      ],
+      "easy": "계획 과정이 복잡해도 최종 보고서는 의사결정에 필요한 항목만 정리돼야 한다.",
+      "professor": "Planning의 끝은 “답변 생성”이 아니라 downstream human workflow와 연결되는 artifact다.",
+      "practical": "Output: candidate summary, predicted metric delta, constraints, uncertainty/OOD, supporting/contradicting cases, expected trade-off, suggested DOE priority. Raw trace는 별도 debug view에 둔다.",
+      "terms": [
+        [
+          "Output contract",
+          "최종 사용자에게 제공하는 구조화 결과 규격"
+        ],
+        [
+          "Contradicting evidence",
+          "추천 방향과 반대되는 과거 근거"
+        ],
+        [
+          "Next action",
+          "사용자가 이어서 수행할 구체 행동"
+        ]
+      ],
+      "quiz": [
+        [
+          "최종 output에 contradicting case도 보여야 하는 이유는?",
+          "확증편향을 줄이고 uncertainty 판단에 도움되기 때문이다."
+        ],
+        [
+          "Raw trace와 user output을 분리하는 이유는?",
+          "debug 정보와 의사결정 정보의 목적/가독성이 다르기 때문이다."
+        ]
+      ]
+    }
+  ]
+}

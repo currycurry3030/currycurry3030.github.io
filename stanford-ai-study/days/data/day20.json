@@ -1,0 +1,244 @@
+{
+  "day": 20,
+  "date": "2026-10-09",
+  "course": "CS329Z",
+  "courseLabel": "CS329Z",
+  "title": "Agent Evaluation",
+  "subtitle": "Agent를 하나의 점수로 평가하지 않고 request/environment/stopping/scorer와 component hierarchy로 분해한다.",
+  "systemPosition": "Cross-loop · Evaluation System",
+  "systemMapping": "Capture·Retrieval·Tool Safety·Prediction·Recommendation·Grounding·Human usefulness를 계층적으로 평가한다.",
+  "progressKey": "stanford-study-day20-progress-v3",
+  "file": "day20_2026-10-09.html",
+  "sourceLinks": [
+    {
+      "label": "Agent Benchmark Best Practices",
+      "url": "https://arxiv.org/abs/2507.02825"
+    },
+    {
+      "label": "Anthropic Agent Evals",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+    },
+    {
+      "label": "CS329Z Eval",
+      "url": "https://cs329z.stanford.edu/"
+    }
+  ],
+  "modules": [
+    {
+      "sourceLabel": "Lecture Section · What Is an Agent Eval",
+      "title": "Agent Eval의 단위 정의",
+      "core": [
+        "Agent task는 request뿐 아니라 environment와 tools를 포함한다.",
+        "Stopping criteria가 없으면 성공/실패 판정이 흔들린다.",
+        "Scorer는 final output뿐 아니라 side effect/state를 평가할 수 있다."
+      ],
+      "easy": "시험 문제만 정해 놓고 시험 시간, 사용할 도구, 종료 조건, 채점법을 정하지 않으면 성적을 비교할 수 없다.",
+      "professor": "Agent eval이 LM benchmark보다 어려운 이유는 interaction이다. 동일 request도 environment state와 tool behavior에 따라 결과가 달라진다.",
+      "practical": "Recipe Advisor eval case는 current context fixture, available tools, budget, expected decision package, scorer를 함께 정의한다. DB snapshot/fixture version도 기록한다.",
+      "terms": [
+        [
+          "Environment",
+          "agent가 상호작용하는 tool/data/state 세계"
+        ],
+        [
+          "Stopping criteria",
+          "task가 끝났다고 판단하는 조건"
+        ],
+        [
+          "Scorer",
+          "성공/품질을 계산하는 평가 함수"
+        ]
+      ],
+      "quiz": [
+        [
+          "Agent eval에서 request만 저장하면 부족한 이유는?",
+          "environment/tool state가 결과에 큰 영향을 주기 때문이다."
+        ],
+        [
+          "DB 기반 eval의 reproducibility를 위해 필요한 것은?",
+          "고정 fixture/snapshot과 tool version 정보다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Capture Eval",
+      "title": "Knowledge Capture 평가",
+      "core": [
+        "Extraction field accuracy와 schema validity를 분리한다.",
+        "Evidence attribution이 source와 일치하는지 검사한다.",
+        "Abstention이 필요한 incomplete case를 별도 평가한다."
+      ],
+      "easy": "양식을 다 채웠는지와 내용이 맞는지는 다른 점수다.",
+      "professor": "Evaluation Case가 downstream memory의 source이므로 capture 오류는 이후 모든 recommendation에 전파된다. 따라서 가장 앞단 eval이 중요하다.",
+      "practical": "Metric: field exact/semantic match, unsupported field rate, evidence precision/coverage, schema pass, abstention calibration. Human correction diff도 유용한 signal이다.",
+      "terms": [
+        [
+          "Field accuracy",
+          "구조화 field가 reference와 일치하는 정도"
+        ],
+        [
+          "Evidence attribution",
+          "field/claim이 올바른 source를 가리키는 정도"
+        ],
+        [
+          "Abstention calibration",
+          "모를 때 보류하는 판단이 적절한 정도"
+        ]
+      ],
+      "quiz": [
+        [
+          "Schema pass만 높으면 충분한가?",
+          "아니다. 형식은 맞아도 evidence/field 내용이 틀릴 수 있다."
+        ],
+        [
+          "Human correction diff가 왜 유용한가?",
+          "어떤 field를 반복적으로 사람이 고치는지 failure pattern을 보여준다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Retrieval/Tool Eval",
+      "title": "Retrieval과 Tool Safety 평가",
+      "core": [
+        "Retrieval은 recall/applicability/evidence coverage를 본다.",
+        "Tool은 correctness뿐 아니라 scan bytes, latency, guardrail violation을 본다.",
+        "대량 결과 truncation/no-progress loop도 실패 유형이다."
+      ],
+      "easy": "정답 자료를 찾았는지뿐 아니라 너무 비싸게 찾지는 않았는지도 평가한다.",
+      "professor": "Agent benchmark는 realism과 reliability를 같이 봐야 한다. Tool이 production resource를 과도하게 쓰면 답이 맞아도 시스템으로는 실패다.",
+      "practical": "Eval trace에 relevant case labels, query scan bytes, returned rows, truncation flag, retry count, tool steps를 저장한다. Hard negative query를 포함한다.",
+      "terms": [
+        [
+          "Applicability precision",
+          "retrieved item 중 실제 적용 가능한 비율"
+        ],
+        [
+          "Guardrail violation",
+          "정해진 안전/비용 한도를 어긴 event"
+        ],
+        [
+          "Operational metric",
+          "latency/bytes/retry처럼 시스템 운영 품질을 나타내는 지표"
+        ]
+      ],
+      "quiz": [
+        [
+          "Tool eval에 scan bytes를 넣는 이유는?",
+          "정답이 맞아도 운영 DB를 과도하게 읽으면 production failure이기 때문이다."
+        ],
+        [
+          "Retrieval hard negative의 역할은?",
+          "표면 유사성 shortcut을 드러낸다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Prediction & Candidate Eval",
+      "title": "ΔMetric과 Candidate 품질 평가",
+      "core": [
+        "Prediction은 error뿐 아니라 uncertainty calibration/OOD detection을 본다.",
+        "Candidate는 constraint pass와 Top-k utility/diversity를 본다.",
+        "단일 best candidate accuracy보다 engineer 선택 가능성을 평가할 수 있다."
+      ],
+      "easy": "예측값 하나를 맞히는 문제와 “검토할 가치 있는 후보 목록을 주는 문제”는 metric이 다르다.",
+      "professor": "Decision-support agent는 ranking problem과 safety problem이 섞여 있다. Prediction model과 candidate generator를 분해해야 개선 방향을 알 수 있다.",
+      "practical": "Metrics: MAE/방향 accuracy/calibration, OOD AUROC 또는 coverage, hard constraint false-negative, Top-k contains-acceptable, candidate diversity/trade-off coverage.",
+      "terms": [
+        [
+          "Calibration",
+          "예측 confidence/uncertainty가 실제 오류율과 맞는 정도"
+        ],
+        [
+          "Top-k utility",
+          "상위 후보군에 실제 유용한 선택지가 포함되는 정도"
+        ],
+        [
+          "Constraint false negative",
+          "위험 candidate를 안전하다고 놓치는 오류"
+        ]
+      ],
+      "quiz": [
+        [
+          "Safety에서 특히 위험한 error는?",
+          "constraint false negative, 즉 위험 후보를 통과시키는 오류다."
+        ],
+        [
+          "Top-k diversity가 필요한 이유는?",
+          "서로 다른 trade-off를 가진 검토 가능한 선택지를 제공하기 위해서다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Grounding/Human Eval",
+      "title": "Evidence와 Human Usefulness",
+      "core": [
+        "Rationale가 실제 evidence를 지원받는지 별도 채점한다.",
+        "Human review time, accept/edit/reject, preference를 actionability metric으로 쓸 수 있다.",
+        "LLM-as-judge는 open-ended quality 보조 수단이지 deterministic fact check 대체가 아니다."
+      ],
+      "easy": "설명이 그럴듯한지와 실제 근거가 맞는지, 엔지니어가 써먹을 수 있는지는 각각 다르다.",
+      "professor": "Agent output 품질은 human workflow 안에서 정의되어야 한다. 자동 metric이 높아도 사람이 매번 다시 조사해야 하면 가치가 낮다.",
+      "practical": "Engineer review UI에서 candidate accept/edit/reject, 수정 field, review duration을 익명 통계로 수집한다. Evidence correctness는 source checker로 우선 평가하고 explanation style에만 judge를 쓴다.",
+      "terms": [
+        [
+          "Actionability",
+          "사용자가 실제 다음 행동을 결정하는 데 도움이 되는 정도"
+        ],
+        [
+          "Unsupported claim rate",
+          "근거 없는 주장 비율"
+        ],
+        [
+          "LLM-as-judge",
+          "LLM을 evaluator로 사용하는 방식"
+        ]
+      ],
+      "quiz": [
+        [
+          "LLM judge보다 deterministic checker가 우선인 영역은?",
+          "schema, 숫자, evidence ID, hard constraint처럼 명확히 검증 가능한 영역이다."
+        ],
+        [
+          "Human review time이 metric이 될 수 있는 이유는?",
+          "system이 실제 판단 부담을 얼마나 줄였는지 보여주기 때문이다."
+        ]
+      ]
+    },
+    {
+      "sourceLabel": "Lecture Section · Regression & Fresh Eval",
+      "title": "고정 Regression Set + Fresh Failure Set",
+      "core": [
+        "고정 holdout은 버전 간 regression 비교에 좋다.",
+        "실제 production failure를 fresh eval에 추가해 benchmark staleness를 줄인다.",
+        "Eval data는 training/RAG corpus와 분리해 contamination을 관리한다."
+      ],
+      "easy": "매번 같은 기출문제로 기본 실력을 비교하면서 새로 발견된 함정 문제도 계속 추가하는 방식이다.",
+      "professor": "Agent system은 빠르게 변화하므로 eval suite도 살아 있어야 한다. 고정 set만 최적화하면 benchmark gaming이 생길 수 있다.",
+      "practical": "Stable regression 20~100 cases + 최근 failure/disagreement queue를 운영한다. Evaluation Case store와 eval holdout에 access boundary를 두고 exact/semantic overlap을 검사한다.",
+      "terms": [
+        [
+          "Regression set",
+          "버전 비교를 위해 고정한 평가 사례"
+        ],
+        [
+          "Fresh eval",
+          "최근 실패/새 환경 변화를 반영한 평가 사례"
+        ],
+        [
+          "Contamination",
+          "평가 data가 학습/retrieval에 노출되어 점수를 왜곡하는 현상"
+        ]
+      ],
+      "quiz": [
+        [
+          "고정 eval만 쓰면 생길 수 있는 문제는?",
+          "system이 그 benchmark에 과적합하고 새로운 failure를 놓칠 수 있다."
+        ],
+        [
+          "Eval case를 Process Memory와 분리해야 하는 이유는?",
+          "agent가 정답 case를 retrieval해서 평가를 암기하는 contamination을 막기 위해서다."
+        ]
+      ]
+    }
+  ]
+}
