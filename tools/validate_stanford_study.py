@@ -30,8 +30,10 @@ def validate_day(day: int, data: dict) -> None:
     assert data["day"] == day
     assert len(data["modules"]) >= 4
     assert data["progressKey"] == f"stanford-study-day{day:02d}-progress-v3"
-    assert data["pcFile"].endswith("_pc.html")
-    assert data["mobileFile"].endswith("_mobile.html")
+    assert data["file"] == f'day{day:02d}_{data["date"]}.html'
+    assert "pcFile" not in data and "mobileFile" not in data, (
+        f"day {day}: pcFile/mobileFile are obsolete, use the unified `file` shell"
+    )
 
     for link in data["sourceLinks"]:
         assert link["url"].startswith("https://"), (day, link)
@@ -50,13 +52,13 @@ def validate_day(day: int, data: dict) -> None:
         for quiz in module["quiz"]:
             assert isinstance(quiz, list) and len(quiz) == 2 and all(str(x).strip() for x in quiz)
 
-    for mode in ("pc", "mobile"):
-        shell = DAYS / f'day{day:02d}_{data["date"]}_{mode}.html'
-        assert shell.exists(), shell
-        text = shell.read_text(encoding="utf-8")
-        for token in ("study_engine.css", f"day{day:02d}_modules.js", "study_engine.js"):
-            assert token in text, (shell, token)
-        assert f'data-layout="{mode}"' in text
+    shell = DAYS / data["file"]
+    assert shell.exists(), shell
+    text = shell.read_text(encoding="utf-8")
+    for token in ("study_engine.css", f"day{day:02d}_modules.js", "study_engine.js"):
+        assert token in text, (shell, token)
+    for obsolete in ("_pc.html", "_mobile.html", "data-layout"):
+        assert obsolete not in text, (shell, obsolete)
 
 
 def validate_extension_index() -> None:
@@ -64,9 +66,8 @@ def validate_extension_index() -> None:
     for day in EXTENSION_DAYS:
         data = load_day(day)
         assert f'data-day="{day}" data-extension="1"' in index, f"missing extension checkbox for day {day}"
-        for mode in ("pc", "mobile"):
-            link = f'days/day{day:02d}_{data["date"]}_{mode}.html'
-            assert link in index, f"missing extension index link: {link}"
+        link = f'days/{data["file"]}'
+        assert link in index, f"missing extension index link: {link}"
     assert 'id="extPt"' in index
     assert 'id="extBar"' in index
 
@@ -113,7 +114,7 @@ def main() -> None:
     scan_public_content()
     print(
         f"Stanford study validation passed: {len(TARGET_DAYS)} engine days, "
-        f"{total_modules} detailed modules, {len(TARGET_DAYS) * 2} shells"
+        f"{total_modules} detailed modules, {len(TARGET_DAYS)} unified shells"
     )
 
 
