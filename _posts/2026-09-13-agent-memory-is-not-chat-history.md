@@ -1,6 +1,6 @@
 ---
 title: "Agent Memory는 대화 기록이 아니다"
-date: 2026-09-13 18:00:00 +0900
+date: 2026-09-13 10:00:00 +0900
 categories: [AI Engineering, Agents]
 tags: [agents, memory, evaluation, knowledge-management]
 ---

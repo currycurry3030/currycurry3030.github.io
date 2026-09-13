@@ -1,6 +1,6 @@
 ---
 title: "학습 사이트 리팩토링: 중복 파일 70개를 지우며 배운 것"
-date: 2026-09-13 14:00:00 +0900
+date: 2026-09-13 11:00:00 +0900
 categories: [Engineering, Refactoring]
 tags: [jekyll, static-site, refactoring, ci]
 ---
@@ -116,11 +116,13 @@ def validate_schedule(days):
 
 지우는 김에 워크플로를 읽다가 이걸 발견했습니다.
 
+{% raw %}
 ```
 .gitignore:        assets/js/dist
 pages-deploy.yml:  (npm run build 없음)
 js-selector.html:  <script defer src="/assets/js/dist/{{ js }}.min.js">
 ```
+{% endraw %}
 
 빌드 산출물이 gitignore인데 배포 워크플로가 빌드를 하지 않습니다. 즉 **배포된 모든 페이지가 404 나는 스크립트를 요청하고 있었습니다.** 테마의 JS가 전혀 로드되지 않는 상태였던 겁니다.
 

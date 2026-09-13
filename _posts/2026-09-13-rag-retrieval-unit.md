@@ -1,6 +1,6 @@
 ---
 title: "RAG의 검색 단위를 다시 생각하기: chunk가 아니라 사건"
-date: 2026-09-13 16:00:00 +0900
+date: 2026-09-13 09:30:00 +0900
 categories: [AI Engineering, RAG]
 tags: [rag, retrieval, reranking, evaluation, grounding]
 ---

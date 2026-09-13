@@ -1,6 +1,6 @@
 ---
 title: "Agent를 점수 하나로 평가할 수 없는 이유"
-date: 2026-09-13 20:00:00 +0900
+date: 2026-09-13 10:30:00 +0900
 categories: [AI Engineering, Evaluation]
 tags: [agents, evaluation, benchmark, testing]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "AI Engineering Notes를 시작하며: 30일 학습 설계"
-date: 2026-09-13 10:00:00 +0900
+date: 2026-09-13 12:00:00 +0900
 categories: [Learning, Curriculum]
 tags: [llm, agents, evaluation, study-plan]
 ---
