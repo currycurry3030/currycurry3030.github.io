@@ -64,13 +64,35 @@
 
   NARROW.addEventListener('change', applyLayout);
 
-  /* ---------------- progress ---------------- */
+  /* ---------------- progress ----------------
+   * Module-level progress lives in D.progressKey (array of module indices).
+   * The dashboard (../index.html) reads two derived keys so both views agree:
+   *   stanford-day-N-summary : {done,total} for the partial progress label
+   *   stanford-day-N-done    : "1"/"0" day completion, mirrored to the checkbox
+   */
+
+  const summaryKey = `stanford-day-${D.day}-summary`;
+  const doneKey = `stanford-day-${D.day}-done`;
 
   let done = new Set(JSON.parse(localStorage.getItem(D.progressKey) || '[]'));
   let cur = Math.max(
     0,
     Math.min(D.modules.length - 1, Number(location.hash.replace('#m', '')) || 0)
   );
+
+  function persistProgress() {
+    const total = D.modules.length;
+    localStorage.setItem(D.progressKey, JSON.stringify([...done]));
+    localStorage.setItem(summaryKey, JSON.stringify({ done: done.size, total }));
+    localStorage.setItem(doneKey, done.size === total ? '1' : '0');
+  }
+
+  // Reconcile on load: a day marked complete on the dashboard before any module
+  // was opened should not report 0 modules back to the dashboard.
+  if (done.size === 0 && localStorage.getItem(doneKey) === '1') {
+    done = new Set(D.modules.map((_, i) => i));
+  }
+  persistProgress();
 
   /* ---------------- rendering ---------------- */
 
@@ -185,7 +207,7 @@
     if (b) {
       const i = +b.dataset.done;
       done.has(i) ? done.delete(i) : done.add(i);
-      localStorage.setItem(D.progressKey, JSON.stringify([...done]));
+      persistProgress();
       b.textContent = done.has(i) ? '✓ 완료' : '○ 완료 처리';
       update();
     }
