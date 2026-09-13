@@ -1,11 +1,11 @@
 {
-  "name": "currycurry3030-github-io",
+  "name": "bjpark-lab-github-io",
   "version": "1.0.0",
   "private": true,
   "description": "Personal AI engineering knowledge base. Builds the Chirpy theme assets used by the Jekyll site.",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/currycurry3030/currycurry3030.github.io.git"
+      "type": "git",
+      "url": "git+https://github.com/bjpark-lab/bjpark-lab.github.io.git"
   },
   "license": "MIT",
   "scripts": {

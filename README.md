@@ -1,4 +1,4 @@
-# currycurry3030.github.io
+# bjpark-lab.github.io
 
 Personal AI engineering knowledge base built with the Chirpy Jekyll theme and GitHub Pages.
 
@@ -16,7 +16,7 @@ Personal AI engineering knowledge base built with the Chirpy Jekyll theme and Gi
 
 A 30-day learning path covering CS224N, CS336, CS329Z, and CS329A topics with daily PC/mobile study pages, active recall, practical exercises, and progress tracking.
 
-- Site: https://currycurry3030.github.io/stanford-ai-study/
+- Site: https://bjpark-lab.github.io/stanford-ai-study/
 - Source: `stanford-ai-study/`
 
 ## Repository structure
