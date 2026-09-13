@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "stanford-ai-study"
 DAYS = PUBLIC / "days"
-TARGET_DAYS = [d for d in range(1, 37) if d != 5]
+TARGET_DAYS = list(range(1, 37))
 EXTENSION_DAYS = range(31, 37)
 REQUIRED_MODULE_KEYS = {"sourceLabel", "title", "core", "easy", "professor", "practical", "terms", "quiz"}
 FORBIDDEN = ("Process RCA Agent", "process-rca-agent")
