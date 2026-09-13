@@ -25,28 +25,33 @@ function isExcluded(url) {
             return true;
         }
     }
+
     return false;
 }
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(cacheName).then(cache => {
-            return cache.addAll(resource);
-        })
+        caches.open(cacheName)
+            .then(cache => cache.addAll(resource))
+            // Do not leave a newer site shell waiting behind a stale cached page.
+            .then(() => self.skipWaiting())
     );
 });
 
 self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then(keyList => {
-            return Promise.all(
-                keyList.map(key => {
-                    if (key !== cacheName) {
-                        return caches.delete(key);
-                    }
-                })
-            );
-        })
+        caches.keys()
+            .then(keyList => {
+                return Promise.all(
+                    keyList.map(key => {
+                        if (key !== cacheName) {
+                            return caches.delete(key);
+                        }
+                    })
+                );
+            })
+            // Take control immediately so tabs receive the current navigation.
+            .then(() => self.clients.claim())
     );
 });
 
@@ -57,6 +62,23 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('fetch', event => {
+    // HTML navigation must prefer the network. A cache-first homepage can hide
+    // newly added tabs until a user performs a hard refresh.
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .then(response => {
+                    const responseToCache = response.clone();
+                    caches.open(cacheName).then(cache => {
+                        cache.put(event.request, responseToCache);
+                    });
+                    return response;
+                })
+                .catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request).then(response => {
             if (response) {
@@ -87,4 +109,3 @@ self.addEventListener('fetch', event => {
         })
     );
 });
-
