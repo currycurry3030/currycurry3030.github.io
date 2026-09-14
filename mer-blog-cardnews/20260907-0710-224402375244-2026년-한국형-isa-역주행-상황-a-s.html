@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>2026년 한국형 ISA 역주행 상황 A/S · 원문 요약</title>
+  <style>
+    :root { --paper:#f4efe5; --card:#fffdf8; --ink:#171612; --muted:#6d685e; --line:#d9d0c0; --accent:#167457; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; background:var(--paper); color:var(--ink); }
+    body { font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+    .article { width:min(820px,calc(100% - 32px)); margin:auto; padding:clamp(40px,8vw,92px) 0; }
+    .article-head { border-top:7px solid var(--accent); border-bottom:2px solid var(--ink); padding:clamp(28px,6vw,58px) 0 clamp(26px,5vw,46px); }
+    .eyebrow { margin:0 0 18px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.14em; }
+    h1,h2 { font-family:Georgia,"Noto Serif KR","Batang",serif; text-wrap:balance; }
+    h1 { margin:0; font-size:clamp(34px,6vw,64px); line-height:1.14; letter-spacing:-.045em; }
+    h2 { margin:0; font-size:clamp(27px,4vw,42px); line-height:1.2; letter-spacing:-.035em; }
+    .date { margin:22px 0 0; color:var(--muted); font-size:14px; }
+    .hero,.gallery-image { margin:0; background:#eee8dc; }
+    .hero { margin-top:30px; }
+    img { display:block; width:100%; height:auto; aspect-ratio:16 / 10; object-fit:contain; }
+    .summary { margin-top:46px; padding:clamp(24px,5vw,44px); background:var(--card); border:1px solid var(--line); box-shadow:0 18px 50px rgba(47,39,26,.10); }
+    .summary-label { margin:0 0 12px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.14em; }
+    .summary-note { margin:16px 0 0; color:var(--muted); font-size:14px; }
+    .summary-note.ai-label { margin:0 0 18px; color:var(--accent); font-weight:800; font-size:13px; letter-spacing:.02em; }
+    .summary-paragraph { margin:0; padding:22px 0; border-top:1px solid var(--line); font-size:clamp(16px,2.2vw,20px); line-height:1.8; word-break:keep-all; overflow-wrap:anywhere; }
+    .summary-paragraph:first-of-type { margin-top:28px; }
+    .tabs { display:flex; gap:8px; margin:0; }
+    .tab-button { appearance:none; border:1px solid var(--line); background:var(--paper); color:var(--muted); padding:10px 18px; font:inherit; font-weight:800; font-size:14px; cursor:pointer; min-height:44px; }
+    .tab-button[aria-selected="true"] { background:var(--accent); border-color:var(--accent); color:white; }
+    .tab-button:focus-visible { outline:3px solid #ef9f38; outline-offset:2px; }
+    .tab-panel[hidden] { display:none; }
+    .gallery { display:grid; gap:18px; margin-top:36px; }
+    .final-comment { margin-top:46px; padding:clamp(24px,5vw,44px); background:var(--card); border:2px solid var(--accent); }
+    .final-comment p:last-child { margin:20px 0 0; font-size:clamp(16px,2.2vw,20px); line-height:1.8; word-break:keep-all; overflow-wrap:anywhere; }
+    .source { margin-top:46px; padding-top:28px; border-top:2px solid var(--ink); }
+    .source p { color:var(--muted); line-height:1.65; }
+    .source-link { display:inline-flex; min-height:48px; align-items:center; padding:0 20px; color:white; background:var(--accent); text-decoration:none; font-weight:800; }
+    .source-link:visited { background:#115841; }
+    .source-link:focus-visible { outline:3px solid #ef9f38; outline-offset:3px; }
+    @media print { body { background:white; } .article { width:auto; padding:0; } .summary { box-shadow:none; } .tabs { display:none; } .tab-panel[hidden] { display:block; } .source-link { color:var(--ink); background:none; border:1px solid var(--ink); } }
+  </style>
+</head>
+<body>
+  <main class="article">
+    <header class="article-head">
+      <p class="eyebrow">메르의 블로그 · 피드메이커4기(경제)</p>
+      <h1>2026년 한국형 ISA 역주행 상황 A/S</h1>
+      <p class="date">2026.09.07 07:10</p>
+      <figure class="hero"><img loading="eager" fetchpriority="high" referrerpolicy="no-referrer" src="https://dthumb-phinf.pstatic.net/?src=%22https%3A%2F%2Fblogthumb.pstatic.net%2FMjAyNjA4MDVfMjk1%2FMDAxNzg1OTAwNjUyNjc0.60cHa0Eg3s2whDPhh2gQDGPVfnD2rZbtiAXAXHEOebEg.Howqm_cdb2dobmVctGnYY9dLBOUgUA3TiqOGmuD1gmsg.JPEG%2Ffuumkdpa.jpg%3Ftype%3Dw2%22&amp;type=ff500_300" alt="원문 대표 이미지"></figure>
+    </header>
+    <section class="summary" aria-labelledby="summary-title">
+      <p class="summary-label">SUMMARY</p>
+      <h2 id="summary-title">요약</h2>
+      <div class="tabs" role="tablist" aria-label="요약 방식 선택">
+        <button type="button" class="tab-button" data-tab="summary" role="tab" aria-selected="true" aria-controls="panel-summary" id="tab-summary">핵심 요약</button>
+        <button type="button" class="tab-button" data-tab="paragraphs" role="tab" aria-selected="false" aria-controls="panel-paragraphs" id="tab-paragraphs">원문 요약</button>
+      </div>
+      <div class="tab-panel" data-tab="summary" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary">
+        <p class="summary-note ai-label">AI 생성 요약 · 원문 링크에서 전체 맥락 확인</p>
+        <p class="summary-paragraph">해당 블로그 글은 한국형 개인종합자산관리계좌(ISA)의 변천 과정과 2026년 개정안의 내용을 다루고 있습니다. 먼저 영국은 ‘단순함’을 성공 비결로 삼아 절세 혜택을 극대화한 ISA를 운영 중이며, 일본 또한 이를 벤치마킹하여 2024년 비과세 한도와 기간을 대폭 확대한 신NISA를 도입하고 최근 어린이 NISA까지 신설했습니다.
+
+반면 한국은 주식 양도차익 비과세라는 특수한 세제 환경으로 인해 ISA가 태생적으로 절세 매력이 제한적인 상황입니다. 이러한 딜레마 속에서 2026년 ISA 개정안은 국내 자산 투자를 장려하는 ‘생산적 금융 ISA’를 추가하는 방향으로 추진되었습니다. 
+
+당초 개정안 초안에는 기존 ISA의 납입 한도 이월 폐지 및 계약 기간 제한 등 기존 가입자에게 불리한 내용이 포함되어 논란이 있었습니다. 그러나 최종 국무회의 확정안에서는 이러한 독소 조항들이 삭제되었습니다. 대신 기존 ISA는 현행대로 유지하되 생산적 금융 ISA를 추가하는 방식으로 확정되었으며, 이 과정에서 계약 기간 제한 철폐, 미사용 납입 한도 이월 허용, 청년형 계좌의 중복 가입 허용 등 일부 제도가 개선되었습니다.</p>
+      </div>
+      <div class="tab-panel" data-tab="paragraphs" role="tabpanel" id="panel-paragraphs" aria-labelledby="tab-paragraphs" hidden>
+        <p class="summary-paragraph">2026년 한국형 ISA의 역주행 상황 : 네이버 블로그 2026년 8월초, ISA 개정안이 온것을 검토해서, &quot;2026년 한국형 ISA의 역주행 상황&quot;이라는 위 글을 블로그에 올렸다. 변동이 있어서 마무리하는 차원에서 정리해 본다. 앞 부분은 기존글의 요약이다.</p><p class="summary-paragraph">영국은 PEP(주식)와 TESSA(예금)라는 두개의 절세 저축, 투자상품을 따로 따로 굴리고 있었음. 상품이 두개라서 국민들이 헷갈리고 관리도 번거로운 문제점이 이슈가 됨. 1999년, PEP와 TESSA를 합치고, 과세특례 상품들을 통합해서 ISA( Individual Savings Account, 개인저축계좌)를 출시함. 하나의 계좌에 예금,주식,채권,펀드를 모두 담고, 여기에서 나오는 수익에는 세금을 안 매긴다는 단순한 구조가 됨.</p><p class="summary-paragraph">반응은 폭발적이었음. 도입 첫해에만 900만명이 가입하고, 현재는 2,267만명이 ISA를 보유하고 있고, 영국 가계금융자산의 10%를 차지하게 됨 영국 ISA의 성공비결은 &#x27; 단순함 &#x27; 이었음. 의무보유기간도 없고, 비과세 상한도 없고, 인출 제한도 없고, 넣고 싶을때 넣고 빼고 싶을때 빼는데, 그안에서 나오는 수익은 비과세임.</p><p class="summary-paragraph">&quot; 상품이 좋으면 억지로 묶어두지 않아도 사람들이 알아서 오래 굴린다 &quot;는 걸 증명한 모델임. 일본은 영국의 ISA를 Copy하고, 앞에 Nippon을 붙여서 NISA((Nippon Individual Savings Account)를 2014년에 도입함. 연간 100만엔 한도로 주식과 펀드, ETF의 차익과 배당을 5년간 비과세하는 제도로 시작함. 일본은 주식 차익과 배당에 20.315%의 세금을 물리는 나라라, 이것을 깎아준다는 것은 꽤 큰 당근임.</p><p class="summary-paragraph">NISA는 청년층 가입이 저조하다는 문제가 있었음. 2024년 신NISA가 출범함. 신NISA는 비과세 상한을 40~120만엔에서 360만엔으로 늘리고, 누적 한도를 600~800만엔에서 1,800만엔으로 대폭 확대함. 5년이던 비과세 기간도 무기한(평생)으로 풀어버렸고, 미국 S&amp;P500이나 나스닥 같은 해외자산까지 담을 수 있게 열어둠.</p><p class="summary-paragraph">기준을 변경하자 월 평균 18만건 정도 되던 ISA신규가입이 53만건으로 점프함. 조건이 파격적으로 개선되다보니, 2023년말 2,125만계좌가 25년말 2,826만계좌까지 늘어나게 됨. 2025년 12월 26일, 일본정부는 2026년도 세제 개정안을 결정하고, 신 NISA를 한단계 더 진화시켰음. 어린이 NISA를 신설해서, 부모가 자녀 명의로 계좌를 열어서 0세부터 가입을 가능하게 하는 것임.</p><p class="summary-paragraph">부모 소득에 따른 경제격차를 줄이기 위해, 자녀분 비과세 한도는 600만엔으로 제한하고, 자금 인출은 12세부터 가능하게 함. 한국은 2016년 3월 ISA가 출시됨. 한국은 영국이나 일본과 다르게 시작부터 족쇄가 너무 많았음. 연 2,000만원 한도에 수익 200만원까지만 비과세하고, 초과분은 9.9% 분리과세, 5년간 돈이 묶이는 제도로 시작된 것임.</p><p class="summary-paragraph">절세액이 연간 수십만원 수준이라, 출시 3년이 지나도 가입자가 213만명 수준이었음. 한국 ISA의 절세효과가 약한 이유가 있기는 함. 영국과 일본은 주식,매매차익에 20%내외의 세금을 메기는데, 한국은 주식차익이 처음부터 비과세라서, ISA로 줄게 별로 없었음. 한국은 대주주를 제외하고는 상장주식,펀드 양도차익이 비과세이고, 배당금만 과세하다보니 ISA가 없어도 세금을 별로 안냈던 것임.</p><p class="summary-paragraph">ISA가 새로 깎아줄 수 있는것은 이자소득세와 배당세 뿐이라 태생적으로 절세 매력이 영국과 일본의 반쪽 짜리 였음. 효과는 약한데, 비과세는 고소득층에 유리하다는 시각이 있어, 금융소득종합과세 대상자 제외, 낮은 비과세 한도등 제한까지 걸었음. 한국 ISA는 혜택을 키우면 부자감세라고 욕을 먹고, 혜택을 줄이면 껍데기라고 외면받는 딜레마에 갇힌 통장이 됨. 2026년 8월 3일에도 ISA 개정안이 나왔음.</p><p class="summary-paragraph">혜택을 국내 자산에만 몰아주면, 부자감세 논란도 피하고 증시 부양도 되지 않겠나는 취지로 개선을 시도한 것 같음. 첫번째 개정은 기존 ISA에 생산적금융 ISA를 추가한 것임. 생산적금융ISA는 이자와 배당소득을 전액 비과세하고 청년(15~34세)은 납입금의 10%를 소득공제까지 해주는 파격 계좌임. 연 2,000만원·총 2억원 한도, 계약 3년(최대 10년), 1인 1계좌로 혜택만 보면 확실히 좋음.</p><p class="summary-paragraph">문제는 투자 대상임. 국내 자산으로만 대상을 한정하고, S&amp;P500·나스닥 등 국내상장 해외 ETF는 제외함. 서학개미가 절세용으로 미국 지수 ETF를 담던 관행을 원천 차단하고, 안전성이 높은 포트폴리오를 짜기 힘들게 만든것임. 두번째 개정은 새 계좌를 만들면서 전체 가입자 973만명의 기존 ISA 혜택을 같이 깎은 것임.</p><p class="summary-paragraph">첫번째는 납입한도의 이월 폐지임. 기존ISA가 가지고있던 올해 못 채운 한도를 내년에 몰아 채우는 기능을 없앰. 지금까지는 올해 500만원만 넣었으면 다음 해에 미납분 1500만원 + 새 한도 2000만원을 더해 3500만원까지 넣을 수 있었음. 이걸 없애다보니, 보너스나 성과급이 잘 나오는 해에 밀린 한도를 한꺼번에 투입하는 방식이 막히게 됨.</p><p class="summary-paragraph">사실상 무기한 연장이 가능했던 계약기간도 최대 5년으로 제한함. 절세계좌는 오래 굴릴수록 복리 효과가 커지는게 핵심인데, 5년제한이 장기 자산형성 지원이라는 명분을 약하게 만들고 있음. 이유는 있어보임. 예적금이나 해외주식 하지말고, 국장을 하라는 말 같음.</p><p class="summary-paragraph">개정안이 국무회의에서 공식적으로 확정되었다. 국무회의 확정안을 보니, 문제로 지적했던 부분중 40번~46번이 삭제되었다. 확정안은 기존 ISA를 현재대로 계속 유지하고, 생산적금융 ISA를 추가하는 방식이다. 생산적 금융 ISA도 다음 세가지를 개선했다.</p><p class="summary-paragraph">계약기간을 최대 10년으로 제한하려던 것을 없앴다. 연간 2천만원 미사용분의 이월을 허용했다. 청년형 생산적금융 ISA와 청년미래적금의 중복 가입이 가능하도록 수정했다. 아래 밑줄 부분이 이번에 수정되어 사라진 부분이다.</p>
+        <p class="summary-note">번호가 붙은 원문 항목을 순서대로 문단으로 묶었습니다. 전체 맥락은 원문에서 확인하세요.</p>
+      </div>
+    </section>
+    <section class="gallery" aria-label="원문 이미지"><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDVfMjk1/MDAxNzg1OTAwNjUyNjc0.60cHa0Eg3s2whDPhh2gQDGPVfnD2rZbtiAXAXHEOebEg.Howqm_cdb2dobmVctGnYY9dLBOUgUA3TiqOGmuD1gmsg.JPEG/fuumkdpa.jpg?type=w966" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MDhfMTEz/MDAxNzg4ODE5NjcyNTc4.1j1yj9UEA6Exbg-IU8AS3_4kENzt3pPevCRF7y7fapMg.JsCfnWlSh4T5pmb2ovVoywHZmb_EApUC03oVgHCM-34g.JPEG/IMG%EF%BC%BF0976.jpg?type=w800" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDVfMTMw/MDAxNzg1OTAwOTkwNDE4.eBtixywde40ZV_hjTbXCYwr7JmwAejf7cGzfu_3pyEgg.5MbJnjhK6qpbMS8N6m0yBjG35Ubx5kI1Cijw0oIsoqsg.JPEG/1511861.jpg?type=w966" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDVfMTQ2/MDAxNzg1OTAxMTA1OTkw.KjCt3jdTaToOMCukXsrr6RBhreOU3CS9RQAGyDg4it4g.hbK3UVLVy44Ilwbl3QiKg5tGNJP35vaV6D6jrpgf3MAg.JPEG/gikvbylf.jpg?type=w966" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDVfMTIg/MDAxNzg1OTAxNjcyNzQy.3XEroJKA8tl3xZWx5rdsHeIoiaYwMeolb8BStPcj2Wog.Y3nCkKPRF_7RHGlN4T4VvEvlxYfj5HrUZo2oAulDQXog.JPEG/gtn7lzbk.JPG?type=w966" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDVfMjY5/MDAxNzg1OTAxNzgyMTE1.tbedzG3QtFLKzwibXPWvkHQ8h0Ungmt8jbuSNe4PNMUg.p77PPXaGGuHnmerkj4DR-IIKBYCnrZkt4NTdFukt2UQg.JPEG/lgvwrfaw.jpg?type=w966" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://postfiles.pstatic.net/MjAyNjA4MDZfNTgg/MDAxNzg1OTU5MjcyMTY3.owoyZGP7GVViFf35LlfqQi7_kjv4Ez802YYVOYn222gg.kUv1DnZxDGcWfGxY1oAbns3ezCYEWGp5NtEOIf0Rl8Mg.JPEG/IMG%EF%BC%BF0132.jpg?type=w966" alt="원문 이미지"></figure></section>
+    <section class="final-comment" aria-labelledby="comment-title"><p class="summary-label">AUTHOR COMMENT</p><h2 id="comment-title">한줄 코멘트</h2><p>위 글의 한줄 코멘트는 다음과 같았다.
+
+한줄 코멘트. 일본이 신NISA로 &#x27;평생 비과세 + 해외투자 전면 개방 + 자녀계좌 추가&#x27;로 확대를 하는 시점에 한국은 &#x27;국내 자산 한정 + 이월 폐지 + 5년 제한&#x27;으로 축소를 하고 있는 상황임. 영국 ISA는 연간 납입한도(3천4백만원내외)외에는 아무런 제한이 없고, 일본 NISA는 여기에 총한도 1,800만엔(1.7억원)조건이 추가되는 정도인데, 한국은 연간 납입한도 2천만원, 총한도 1억원, 비과세 200만원, 초과분 9.9% 분리과세, 의무보유기간 3년, 계약기간 5년, 생산적금융 ISA는 예적금 및 해외자산 불가능, 금융소득종합과세자 제외등 복잡한 제한들을 포함하고 있음. 이런 제도는 최대한 심플한게 베스트임.
+
+한줄 코멘트를 다시 적으면 다음과 같아 질 것 같다.
+
+한줄 코멘트. 일본이 신NISA로 &#x27;평생 비과세 + 해외투자 전면 개방 + 자녀계좌 추가&#x27;로 확대를 하는 시점에 한국은 &#x27;국내 자산 한정 + 이월 폐지 + 5년 제한 &#x27;으로 축소를 하고 있는 상황임. 영국 ISA는 연간 납입한도(3천4백만원내외)외에는 아무런 제한이 없고, 일본 NISA는 여기에 총한도 1,800만엔(1.7억원)조건이 추가되는 정도인데, 한국은 연간 납입한도 2천만원, 총한도 1억원, 비과세 200만원, 초과분 9.9% 분리과세, 의무보유기간 3년, 계약기간 5년 의 제한이 있고, 이번에 새로 나오는 생산적금융 ISA는 예적금 및 해외자산 투자 불가등 복잡한 제한을 포함하고 있음. 이런 제도는 최대한 심플한게 베스트임. 이번 확정안을 보면 이상하다고 지적한 부분이 많이 개선 되었지만, 예적금이나 해외자산(미국주식) 투자를 못하게 막는게 뭐가 생산적인지 이해는 잘 안감. 영국이나 일본 ISA 수준으로 심플하게 바꿔주면 좋겠음. 청년층의 초기자산 형성에 도움이 될 것임.</p></section>
+    <footer class="source">
+      <h2>원문에서 계속 읽기</h2>
+      <p>글 전체 내용과 댓글은 네이버 원문에서 확인할 수 있습니다.</p>
+      <a class="source-link" href="https://blog.naver.com/ranto28/224402375244" target="_blank" rel="noopener">네이버 원문 열기 ↗</a>
+    </footer>
+  </main>
+  <script>
+    document.querySelectorAll('.tab-button').forEach(function(button){
+      button.addEventListener('click', function(){
+        var target = button.dataset.tab;
+        document.querySelectorAll('.tab-button').forEach(function(other){ other.setAttribute('aria-selected', String(other === button)); });
+        document.querySelectorAll('.tab-panel').forEach(function(panel){ panel.hidden = panel.dataset.tab !== target; });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>나는 왜 추석 KTX 예매에 실패 했을까? · 원문 요약</title>
+  <style>
+    :root { --paper:#f4efe5; --card:#fffdf8; --ink:#171612; --muted:#6d685e; --line:#d9d0c0; --accent:#167457; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; background:var(--paper); color:var(--ink); }
+    body { font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+    .article { width:min(820px,calc(100% - 32px)); margin:auto; padding:clamp(40px,8vw,92px) 0; }
+    .article-head { border-top:7px solid var(--accent); border-bottom:2px solid var(--ink); padding:clamp(28px,6vw,58px) 0 clamp(26px,5vw,46px); }
+    .eyebrow { margin:0 0 18px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.14em; }
+    h1,h2 { font-family:Georgia,"Noto Serif KR","Batang",serif; text-wrap:balance; }
+    h1 { margin:0; font-size:clamp(34px,6vw,64px); line-height:1.14; letter-spacing:-.045em; }
+    h2 { margin:0; font-size:clamp(27px,4vw,42px); line-height:1.2; letter-spacing:-.035em; }
+    .date { margin:22px 0 0; color:var(--muted); font-size:14px; }
+    .hero,.gallery-image { margin:0; background:#eee8dc; }
+    .hero { margin-top:30px; }
+    img { display:block; width:100%; height:auto; aspect-ratio:16 / 10; object-fit:contain; }
+    .summary { margin-top:46px; padding:clamp(24px,5vw,44px); background:var(--card); border:1px solid var(--line); box-shadow:0 18px 50px rgba(47,39,26,.10); }
+    .summary-label { margin:0 0 12px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.14em; }
+    .summary-note { margin:16px 0 0; color:var(--muted); font-size:14px; }
+    .summary-note.ai-label { margin:0 0 18px; color:var(--accent); font-weight:800; font-size:13px; letter-spacing:.02em; }
+    .summary-paragraph { margin:0; padding:22px 0; border-top:1px solid var(--line); font-size:clamp(16px,2.2vw,20px); line-height:1.8; word-break:keep-all; overflow-wrap:anywhere; }
+    .summary-paragraph:first-of-type { margin-top:28px; }
+    .tabs { display:flex; gap:8px; margin:0; }
+    .tab-button { appearance:none; border:1px solid var(--line); background:var(--paper); color:var(--muted); padding:10px 18px; font:inherit; font-weight:800; font-size:14px; cursor:pointer; min-height:44px; }
+    .tab-button[aria-selected="true"] { background:var(--accent); border-color:var(--accent); color:white; }
+    .tab-button:focus-visible { outline:3px solid #ef9f38; outline-offset:2px; }
+    .tab-panel[hidden] { display:none; }
+    .gallery { display:grid; gap:18px; margin-top:36px; }
+    .final-comment { margin-top:46px; padding:clamp(24px,5vw,44px); background:var(--card); border:2px solid var(--accent); }
+    .final-comment p:last-child { margin:20px 0 0; font-size:clamp(16px,2.2vw,20px); line-height:1.8; word-break:keep-all; overflow-wrap:anywhere; }
+    .source { margin-top:46px; padding-top:28px; border-top:2px solid var(--ink); }
+    .source p { color:var(--muted); line-height:1.65; }
+    .source-link { display:inline-flex; min-height:48px; align-items:center; padding:0 20px; color:white; background:var(--accent); text-decoration:none; font-weight:800; }
+    .source-link:visited { background:#115841; }
+    .source-link:focus-visible { outline:3px solid #ef9f38; outline-offset:3px; }
+    @media print { body { background:white; } .article { width:auto; padding:0; } .summary { box-shadow:none; } .tabs { display:none; } .tab-panel[hidden] { display:block; } .source-link { color:var(--ink); background:none; border:1px solid var(--ink); } }
+  </style>
+</head>
+<body>
+  <main class="article">
+    <header class="article-head">
+      <p class="eyebrow">메르의 블로그 · 주절주절</p>
+      <h1>나는 왜 추석 KTX 예매에 실패 했을까?</h1>
+      <p class="date">2026.09.11 08:00</p>
+      <figure class="hero"><img loading="eager" fetchpriority="high" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MTFfMzQg/MDAxNzg5MDc5MjMzMzg4.AYlPYpoKk3hkZuPe1FiWgy6jtRulvDuS31xrIKPfTfQg.9WssFI9iXhVz6nf_kilN1FYfYmNpEgqBXcha7PtlhzEg.JPEG/IMG_1609.jpg?type=w800" alt="원문 대표 이미지"></figure>
+    </header>
+    <section class="summary" aria-labelledby="summary-title">
+      <p class="summary-label">SUMMARY</p>
+      <h2 id="summary-title">요약</h2>
+      <div class="tabs" role="tablist" aria-label="요약 방식 선택">
+        <button type="button" class="tab-button" data-tab="summary" role="tab" aria-selected="true" aria-controls="panel-summary" id="tab-summary">핵심 요약</button>
+        <button type="button" class="tab-button" data-tab="paragraphs" role="tab" aria-selected="false" aria-controls="panel-paragraphs" id="tab-paragraphs">원문 요약</button>
+      </div>
+      <div class="tab-panel" data-tab="summary" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary">
+        <p class="summary-note ai-label">AI 생성 요약 · 원문 링크에서 전체 맥락 확인</p>
+        <p class="summary-paragraph">작성자는 추석 명절 KTX와 SRT 예매에 도전했으나, 어제와 오늘 모두 10만 번이 넘는 대기 순번을 받아 예매에 어려움을 겪었습니다. 작성자가 분석한 바에 따르면, 이번 추석에 공급된 KTX 좌석 중 상당수가 교통약자 사전예매로 이미 소진되어 일반 예매 가능 좌석이 크게 줄어든 상황입니다. 특히 올해부터는 기존의 고령자, 장애인, 국가유공자 외에 임산부가 교통약자 사전예매 대상에 새로 추가되면서 해당 예매 이용객이 급격히 증가했습니다. 실제로 2020년 추석 당시 3만 1천 석이었던 사전예매 물량은 올해 18만 3천 석까지 늘어났습니다. 교통약자 사전예매 신청을 위해서는 임신진단서나 산모수첩 등을 정부24를 통해 온라인으로 제출하거나 역 창구에 직접 방문하여 승인을 받아야 합니다. 결과적으로 작성자는 원하는 시간대 좌석을 확보하려면 최소 3만 번 이내의 대기 순번을 받아야 할 것으로 예상하며, 높아진 예매 경쟁에 큰 부담을 느끼고 있습니다.</p>
+      </div>
+      <div class="tab-panel" data-tab="paragraphs" role="tabpanel" id="panel-paragraphs" aria-labelledby="tab-paragraphs" hidden>
+        <p class="summary-paragraph">어제는 수서출발 KTX의 예매에 실패했다. 예매시작시간인 오전 7시 정각에 예약을 눌렀어도, 대기순서가 150680번이 나왔기 때문이다. 오늘은 서울역 출발 KTX와 수서출발 SRT를 예매하는 본게임이라 어제보다 준비를 더 했다. 댓글에서 이웃이 알려준 코레일 서버시간까지 체크하면서, 7시 정각에 누르기위해 노력한 것이다.</p><p class="summary-paragraph">이렇게 노력한 결과가 나왔다. 146320번이다. 내 뒤의 대기자가 297,520명이나 있지만, 위안이 되지 않는다. 대기순서가 5만번이내에 들어야 어느정도 가능성이 있기 때문이다.</p><p class="summary-paragraph">5만번이라고 하는 이유가 있다. 이번 추석명절에 공급된 KTX좌석은 총 43만3000석이었다. 이중에 경부선은 65%정도가 해당되니, 28만석 정도가 배정되었을 것이다. 교통약자 사전예매가 복병이다.</p><p class="summary-paragraph">42만3천석중 18만3천석이 교통약자 사전예매로 이미 소진된 것이다. 주요 노선별 예매율은 중앙선 52.4%, 전라선 50.7%, 호남선 48.9%, 경부선 47%, 경전선 44.6%로 집계됐다. 경부선 28만석중에서 47%가 교통약자 사전예매로 소진되었으니, 13만석이 팔려나갔고, 15만석이 남은셈이다. 인당 평균 3매를 예매한다고 보면, 5만번 정도가 한계이고, 2매를 예매하면 7만5천번 정도 이내에 들어야 대상이 된다.</p><p class="summary-paragraph">전체 좌석중에 내가 원하는 시간대의 좌석은 훨씬 적으니, 최소 3만번 이내에는 들어야지 어느정도 안정권에 들 것 같다. 이번에 교통약자 사전예매는 대상이 변경되었다. 지금까지는 65세 이상 고령자, 장애인, 국가유공자가 교통약자로 사전예매를 했는데, 이번에는 임산부가 추가되었다. 이번 추석 사전예매 이용자는 고령자(57%)가 가장 많았고, 장애인(22%), 임산부(19%), 국가유공자(2%) 순이다.</p><p class="summary-paragraph">임산부가 19%라 꽤 많은 비중을 차지한 셈이다. 교통약자 사전예매를 신청하는 사람들이 부쩍 늘어나고 있는것을 느끼고 있다. 2020년 추석만 하더라도 교통약자 사전예매는 3만1천석이 팔렸는데, 올해는 18만3천석이 팔리고 있는 것이다. 임산부 여부는 어떻게 확인하는지 궁금할 수 있다.</p><p class="summary-paragraph">나도 궁금했다. 임신 중인 경우에는 임신진단서 또는 산모수첩 사본, 출산 후~1년 이내는 출생증명서 또는 주민등록등본 사본이 필요하다. 정부24온라인 신청(원스톱 서비스)에 임산부 인증서류를 제출하면, 3일내 승인해 준다고 한다. 승인이 나면, 정부24에서 코레일로 자동 반영이 되는 식이다.</p><p class="summary-paragraph">코레일 역 창구에 직접 위 서류를 가지고 방문하는 방법도 있다.</p>
+        <p class="summary-note">번호가 붙은 원문 항목을 순서대로 문단으로 묶었습니다. 전체 맥락은 원문에서 확인하세요.</p>
+      </div>
+    </section>
+    <section class="gallery" aria-label="원문 이미지"><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MTFfMjEy/MDAxNzg5MDc5NDAwOTIy.J6xD5yDdx8wTxB2HiH5yqJpVJ_se_vlYGvN4eihZtPgg.HS89eGK1UT2Ajnl3KdzX8GnRzgztjbrin6veedCSIKUg.PNG/image.png?type=w800" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MTFfMjAg/MDAxNzg5MDc5NTM2Mzg2.AqBa2HPEYvAyLj5VyCsay6BknEqGRy5PsEjfq-URT8Ag.kQA6j8tO-UukLAAI0EnKn8LXh45DyBQqWuxa85-O6_cg.JPEG/IMG_1611.jpg?type=w800" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MTFfMTk1/MDAxNzg5MDgxNjM5MjAz.1F6B6T4tS9sEkG69464fgSNmanW_47mOT0UT_Y97sBsg.byF4I9s9Gn2Xn_M5_jySm3wzzCq0-N3iTwNmLbTlWwMg.JPEG/yznblzdo.jpg?type=w800" alt="원문 이미지"></figure><figure class="gallery-image"><img loading="lazy" referrerpolicy="no-referrer" src="https://mblogthumb-phinf.pstatic.net/MjAyNjA5MTFfNjUg/MDAxNzg5MDgxMDg1OTA2.-qNMvostf96yOdVzPVz7xFR8RFRloMU-g8fYGCtO1o0g.leoZ2OTv7r_LIJuAvyKVNUe1nyQcCbh5FkR6NHrpDZwg.PNG/image.png?type=w800" alt="원문 이미지"></figure></section>
+    <section class="final-comment" aria-labelledby="comment-title"><p class="summary-label">AUTHOR COMMENT</p><h2 id="comment-title">한줄 코멘트</h2><p>한줄 코멘트. KTX 명절 승차표 예매는 이제 현역에서 은퇴하고, 공연장 티켓예매로 단련된 딸에게 넘겨야 겠다.</p></section>
+    <footer class="source">
+      <h2>원문에서 계속 읽기</h2>
+      <p>글 전체 내용과 댓글은 네이버 원문에서 확인할 수 있습니다.</p>
+      <a class="source-link" href="https://blog.naver.com/ranto28/224407903415" target="_blank" rel="noopener">네이버 원문 열기 ↗</a>
+    </footer>
+  </main>
+  <script>
+    document.querySelectorAll('.tab-button').forEach(function(button){
+      button.addEventListener('click', function(){
+        var target = button.dataset.tab;
+        document.querySelectorAll('.tab-button').forEach(function(other){ other.setAttribute('aria-selected', String(other === button)); });
+        document.querySelectorAll('.tab-panel').forEach(function(panel){ panel.hidden = panel.dataset.tab !== target; });
+      });
+    });
+  </script>
+</body>
+</html>
